@@ -1,0 +1,54 @@
+var Photos = new Meteor.Collection("photos");
+
+if (Meteor.isClient) {
+  var selectedMarkerId = new Blaze.ReactiveVar(null);
+
+  Deps.autorun(function () {
+    selectedMarkerId.set(Session.get("currentPhoto"));
+  });
+
+  Template.map.helpers({
+    markers: Photos.find(),
+    selectedMarkerId: selectedMarkerId
+  });
+
+  var onSuccess = function (imageData) {
+    var coords = Geolocation.currentLocation().coords;
+
+    Photos.insert({
+      image: imageData,
+      location: coords,
+      createdAt: new Date(),
+      marker: {
+        lat: coords.latitude,
+        lng: coords.longitude,
+        infoWindowContent: "<img width='100' src='" + imageData + "' />"
+      }
+    });
+
+    Router.go("/list");
+  };
+
+  Template.layout.events({
+    "click .photo-link": function () {
+      MeteorCamera.getPicture(function (error, data) {
+        // we have a picture
+        if (! error) {
+          onSuccess(data);
+        }
+      });
+    }
+  });
+
+  Template.layout.helpers({
+    onPage: function (pageName) {
+      return Router.current().route.name === pageName;
+    }
+  });
+
+  Template.list.helpers({
+    photos: function () {
+      return Photos.find({}, {sort: {"createdAt": -1}});
+    }
+  });
+}

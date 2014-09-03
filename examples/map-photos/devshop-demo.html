@@ -1,0 +1,52 @@
+<head>
+  <title>devshop-demo</title>
+  <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2V8IFYwB-Syx2-lauWq8EgjNmS7b8fMY">
+  </script>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+
+<template name="map">
+  <div class="google-map">
+    {{> googleMap
+      geolocate=true
+      markers=markers
+      selectedMarkerId=selectedMarkerId}}
+  </div>
+</template>
+
+<template name="list">
+  {{#each photos}}
+    <div class="card">
+      <a href="/map/{{_id}}" class="item item-image">
+        <img src="{{image}}" />
+      </a>
+    </div>
+  {{/each}}
+</template>
+
+<template name="camera-page">
+  {{> camera}}
+</template>
+
+<template name="layout">
+  <div class="bar bar-header bar-stable">
+    <h1 class="title">Photos</h1>
+    <button class="button button-clear pull-right photo-link button-positive">Post Photo</button>
+  </div>
+
+  <div class="content">
+    {{> yield}}
+  </div>
+
+  <div class="tabs tabs-icon-top">
+    <a class="tab-item {{#if onPage 'map'}}positive{{/if}} {{#if onPage 'mapWithPhoto'}}positive{{/if}}" href="/">
+      <i class="icon ion-map"></i>
+      Map
+    </a>
+    <a class="tab-item {{#if onPage 'list'}}positive{{/if}}" href="/list">
+      <i class="icon ion-navicon"></i>
+      List
+    </a>
+  </div>
+</template>

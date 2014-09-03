@@ -1,0 +1,42 @@
+.camera-popup {
+  position: absolute;
+  z-index: 1000;
+  left: 20%;
+  right: 20%;
+  top: 20%;
+
+  background: white;
+
+  .viewfinder {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .photo-preview {
+    width: 320px;
+  }
+
+  padding: 20px;
+  border-radius: 10px;
+
+  canvas {
+    display: none;
+  }
+}
+
+.camera-overlay {
+  z-index: 999;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+
+  background: rgba(0, 0, 0, 0.4);
+}

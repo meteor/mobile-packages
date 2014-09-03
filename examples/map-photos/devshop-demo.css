@@ -1,0 +1,55 @@
+/* CSS declarations go here */
+
+html, body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.content {
+  position: absolute;
+  top: 43px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.google-map {
+  width: 100%;
+  height: 100%;
+}
+
+.viewfinder {
+  text-align: center;
+  padding: 10px;
+}
+
+.center {
+  text-align: center;
+}
+
+.text-besides-image {
+  display: none;
+}
+
+#login-buttons .login-image {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+.login-display-name {
+  display: none !important;
+}
+
+#login-buttons {
+  margin: 4px 2px;
+}
+
+.facebook-login {
+  position: absolute;
+  z-index: 1000000;
+}

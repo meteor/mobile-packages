@@ -1,0 +1,8 @@
+{
+  "cordova": {
+    "com.phonegap.plugins.facebookconnect": {
+      "APP_ID": 485640431571286,
+      "APP_NAME": "Devshop Demo"
+    }
+  }
+}

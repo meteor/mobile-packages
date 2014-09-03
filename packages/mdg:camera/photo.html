@@ -1,0 +1,32 @@
+<template name="camera">
+  <div class="camera-overlay">
+  </div>
+
+  <div class="camera-popup">
+    {{#if photo}}
+      <div class="center">
+        <img src="{{photo}}" class="photo-preview" />
+        <div>
+          <button class="button use-photo">Use Photo</button>
+          <button class="button new-photo">Take New Photo</button>
+        </div>
+      </div>
+    {{else}}
+      {{> viewfinder}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="viewfinder">
+  <div class="viewfinder">
+    <div class="center">
+      <video id="video"></video>
+      <div>
+        <button class="button shutter">Take Photo</button>
+        <button class="button cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="canvas" style="visibility: hidden"></canvas>
+</template>

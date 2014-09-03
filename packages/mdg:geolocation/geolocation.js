@@ -1,0 +1,87 @@
+// is location refreshing currently on?
+var watchingPosition = false;
+
+// current location variable and dependency
+var locationDep = new Tracker.Dependency();
+var location = null;
+
+// error variable and dependency
+var errorDep = new Tracker.Dependency();
+var error = null;
+
+// options for watchPosition
+var options = {
+  enableHighAccuracy: true,
+  maximumAge: 0
+};
+
+var onError = function (newError) {
+  error = newError;
+  errorDep.changed();
+};
+
+var onPosition = function (newLocation) {
+  location = newLocation;
+  locationDep.changed();
+
+  error = null;
+  errorDep.changed();
+};
+
+var startWatchingPosition = function () {
+  if (! watchingPosition && navigator.geolocation) {
+    navigator.geolocation.watchPosition(onPosition, onError, options);
+    watchingPosition = true;
+  }
+};
+
+// exports
+
+/**
+ * @summary The namespace for all geolocation functions.
+ * @namespace
+ */
+Geolocation = {
+  /**
+   * @summary Get the current geolocation error
+   * @return {PositionError} The
+   * [position error](https://developer.mozilla.org/en-US/docs/Web/API/PositionError)
+   * that is currently preventing position updates.
+   */
+  error: function () {
+    startWatchingPosition();
+    errorDep.depend();
+    return error;
+  },
+
+  /**
+   * @summary Get the current location
+   * @return {Position | null} The
+   * [position](https://developer.mozilla.org/en-US/docs/Web/API/Position)
+   * that is reported by the device, or null if no position is available.
+   */
+  currentLocation: function () {
+    startWatchingPosition();
+    locationDep.depend();
+    return location;
+  },
+  // simple version of location; just lat and lng
+  
+  /**
+   * @summary Get the current latitude and longitude
+   * @return {Object | null} An object with `lat` and `lng` properties,
+   * or null if no position is available.
+   */
+  latLng: function () {
+    var loc = Geolocation.currentLocation();
+
+    if (loc) {
+      return {
+        lat: loc.coords.latitude,
+        lng: loc.coords.longitude
+      };
+    }
+
+    return null;
+  }
+};

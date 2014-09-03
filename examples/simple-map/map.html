@@ -1,0 +1,13 @@
+<head>
+  <title>map</title>
+</head>
+
+<body>
+  <h1>Where am I?</h1>
+
+  <img src="http://maps.googleapis.com/maps/api/staticmap?center={{loc.lat}},{{loc.lng}}&zoom=15&size=600x300&maptype=roadmap&markers=color:blue%7C{{loc.lat}},{{loc.lng}}" />
+
+  {{#if error}}
+    <p>Error: {{error.message}}</p>
+  {{/if}}
+</body>
