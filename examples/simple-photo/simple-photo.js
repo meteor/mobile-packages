@@ -8,8 +8,8 @@ if (Meteor.isClient) {
   Template.body.events({
     'click button': function () {
       var cameraOptions = {
-        width: 640,
-        height: 480
+        width: 800,
+        height: 600
       };
 
       MeteorCamera.getPicture(cameraOptions, function (error, data) {

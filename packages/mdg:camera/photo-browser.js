@@ -1,9 +1,19 @@
 var stream;
-var photo = new Blaze.ReactiveVar(null);
 var closeAndCallback;
+
+var photo = new ReactiveVar(null);
+var error = new ReactiveVar(null);
+var waitingForPermission = new ReactiveVar(null);
+
+var canvasWidth = 0;
+var canvasHeight = 0;
+
+var quality = 80;
 
 Template.viewfinder.rendered = function() {
   var template = this;
+
+  waitingForPermission.set(true);
 
   var video = template.find("video");
 
@@ -18,12 +28,13 @@ Template.viewfinder.rendered = function() {
       video.src = vendorURL.createObjectURL(stream);
     }
     video.play();
+
+    waitingForPermission.set(false);
   };
 
   // user declined or there was some other error
   var failure = function(err) {
-    // XXX return the error
-    console.log("An error occured! " + err);
+    error.set(err);
   };
 
   // tons of different browser prefixes
@@ -57,6 +68,12 @@ Template.viewfinder.rendered = function() {
 Template.camera.helpers({
   photo: function () {
     return photo.get();
+  },
+  error: function () {
+    return error.get();
+  },
+  permissionDeniedError: function () {
+    return error.get() && error.get().name === "PermissionDeniedError";
   }
 });
 
@@ -66,6 +83,13 @@ Template.camera.events({
   },
   "click .new-photo": function () {
     photo.set(null);
+  },
+  "click .cancel": function () {
+    closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
+    
+    if (stream) {
+      stream.stop();
+    }
   }
 });
 
@@ -73,27 +97,45 @@ Template.viewfinder.events({
   'click .shutter': function (event, template) {
     var video = template.find("video");
     var canvas = template.find("canvas");
-    var width = 640;
-    var height = 480;
 
-    canvas.width = width;
-    canvas.height = height;
-    canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-    var data = canvas.toDataURL('image/png');
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
+    var data = canvas.toDataURL('image/jpeg', quality);
     photo.set(data);
-    stream.stop();
-  },
-  "click .cancel": function () {
-    closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
     stream.stop();
   }
 });
 
+Template.viewfinder.helpers({
+  "waitingForPermission": function () {
+    return waitingForPermission.get();
+  }
+});
+
 MeteorCamera.getPicture = function (options, callback) {
+  // if options are not passed
   if (! callback) {
     callback = options;
-    options = null;
+    options = {};
   }
+
+  desiredHeight = options.height || 640;
+  desiredWidth = options.width || 480;
+
+  // Canvas#toDataURL takes the quality as a 0-1 value, not a percentage
+  quality = (options.quality || 49) / 100;
+
+  if (desiredHeight * 4 / 3 > desiredWidth) {
+    canvasWidth = desiredHeight * 4 / 3;
+    canvasHeight = desiredHeight;
+  } else {
+    canvasHeight = desiredWidth * 3 / 4;
+    canvasWidth = desiredWidth;
+  }
+
+  canvasWidth = Math.round(canvasWidth);
+  canvasHeight = Math.round(canvasHeight);
 
   var view;
   
