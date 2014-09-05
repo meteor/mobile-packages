@@ -71,6 +71,19 @@ Template.viewfinder.rendered = function() {
   }, false);
 };
 
+// is the current error a permission denied error?
+var permissionDeniedError = function () {
+  return error.get() && (
+    error.get().name === "PermissionDeniedError" || // Chrome and Opera
+    error.get() === "PERMISSION_DENIED" // Firefox
+  );
+};
+
+// is the current error a browser not supported error?
+var browserNotSupportedError = function () {
+  return error.get() && error.get() === "BROWSER_NOT_SUPPORTED";
+};
+
 Template.camera.helpers({
   photo: function () {
     return photo.get();
@@ -78,15 +91,8 @@ Template.camera.helpers({
   error: function () {
     return error.get();
   },
-  permissionDeniedError: function () {
-    return error.get() && (
-      error.get().name === "PermissionDeniedError" || // Chrome and Opera
-      error.get() === "PERMISSION_DENIED" // Firefox
-    );
-  },
-  browserNotSupportedError: function () {
-    return error.get() && error.get() === "BROWSER_NOT_SUPPORTED";
-  }
+  permissionDeniedError: permissionDeniedError,
+  browserNotSupportedError: browserNotSupportedError
 });
 
 Template.camera.events({
@@ -97,7 +103,13 @@ Template.camera.events({
     photo.set(null);
   },
   "click .cancel": function () {
-    closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
+    if (permissionDeniedError()) {
+      closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
+    } else if (browserNotSupportedError()) {
+      closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
+    } else {
+      closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
+    }
     
     if (stream) {
       stream.stop();

@@ -2,12 +2,10 @@
 var watchingPosition = false;
 
 // current location variable and dependency
-var locationDep = new Tracker.Dependency();
-var location = null;
+var location = new ReactiveVar(null);
 
 // error variable and dependency
-var errorDep = new Tracker.Dependency();
-var error = null;
+var error = new ReactiveVar(null);
 
 // options for watchPosition
 var options = {
@@ -16,16 +14,12 @@ var options = {
 };
 
 var onError = function (newError) {
-  error = newError;
-  errorDep.changed();
+  error.set(newError);
 };
 
 var onPosition = function (newLocation) {
-  location = newLocation;
-  locationDep.changed();
-
-  error = null;
-  errorDep.changed();
+  location.set(newLocation);
+  error.set(null);
 };
 
 var startWatchingPosition = function () {
@@ -50,8 +44,7 @@ Geolocation = {
    */
   error: function () {
     startWatchingPosition();
-    errorDep.depend();
-    return error;
+    return error.get();
   },
 
   /**
@@ -62,8 +55,7 @@ Geolocation = {
    */
   currentLocation: function () {
     startWatchingPosition();
-    locationDep.depend();
-    return location;
+    return location.get();
   },
   // simple version of location; just lat and lng
   
