@@ -1,13 +1,18 @@
 <template name="camera">
   <div class="camera-overlay">
+    {{! used to make the background dark}}
   </div>
 
-  <div class="camera-popup">
+  <div class="camera-popup {{#if permissionDeniedError}}camera-popup-wide{{/if}}">
     {{#if error}}
       {{#if permissionDeniedError}}
         {{> permissionDenied}}
       {{else}}
-        {{> genericError}}
+        {{#if browserNotSupportedError}}
+          {{> genericError message="Sorry, this browser is currently not supported for camera functionality."}}
+        {{else}}
+          {{> genericError message="There was an error accessing the camera."}}
+        {{/if}}
       {{/if}}
     {{else}}
       {{#if photo}}
@@ -45,7 +50,7 @@
 
 <template name="genericError">
   <div class="generic-error">
-    <p>There was an error accessing the camera.</p>
+    <p>{{message}}</p>
     <button class="button cancel">Close Popup</button>
   </div>
 </template>
@@ -55,16 +60,23 @@
     <h2>Camera Permissions Denied</h2>
 
     <p>
-      You have previously denied this app permission to use your camera.
+      You have denied this app permission to use your camera.
       If you would like to allow permissions, follow the directions for your
       browser below.
     </p>
 
-    <ul>
-      <li>Google Chrome</li>
-      <li>Mozilla Firefox</li>
-      <li>Internet Explorer</li>
-    </ul>
+    <dl class="permissions-howto">
+      <dt>Google Chrome</dt>
+        <dd>Go to Settings > "Show advanced settings..." >
+          "Content settings..." > Media heading > "Manage exceptions...",
+          then find this website in the list and allow video capture.</dd>
+      <dt>Mozilla Firefox</dt>
+        <dd>Reload the page and try again.</dd>
+      <dt>Opera</dt>
+        <dd>Go to Preferences > Websites > Media heading >
+          "Manage exceptions...", then find this website in the list and
+          allow video capture.</dd>
+    </dl>
 
     <button class="button cancel">Close Popup</button>
   </div>

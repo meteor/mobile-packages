@@ -45,6 +45,12 @@ Template.viewfinder.rendered = function() {
     navigator.msGetUserMedia
   );
 
+  if (! navigator.getUserMedia) {
+    // no browser support, sorry
+    failure("BROWSER_NOT_SUPPORTED");
+    return;
+  }
+
   // initiate request for webcam
   navigator.getUserMedia({
       video: true,
@@ -73,7 +79,13 @@ Template.camera.helpers({
     return error.get();
   },
   permissionDeniedError: function () {
-    return error.get() && error.get().name === "PermissionDeniedError";
+    return error.get() && (
+      error.get().name === "PermissionDeniedError" || // Chrome and Opera
+      error.get() === "PERMISSION_DENIED" // Firefox
+    );
+  },
+  browserNotSupportedError: function () {
+    return error.get() && error.get() === "BROWSER_NOT_SUPPORTED";
   }
 });
 
