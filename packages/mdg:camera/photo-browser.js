@@ -113,6 +113,18 @@ Template.viewfinder.helpers({
   }
 });
 
+/**
+ * @summary Get a picture from the device's default camera.
+ * @param  {Object}   options  Options
+ * @param {Number} options.height The minimum height of the image
+ * @param {Number} options.width The minimum width of the image
+ * @param {Number} options.quality [description]
+ * @param  {Function} callback A callback that is called with two arguments:
+ * 1. error, an object that contains error.message and possibly other properties
+ * depending on platform
+ * 2. data, a Data URI string with the image encoded in JPEG format, ready to
+ * use as the `src` attribute on an `<img />` tag.
+ */
 MeteorCamera.getPicture = function (options, callback) {
   // if options are not passed
   if (! callback) {
