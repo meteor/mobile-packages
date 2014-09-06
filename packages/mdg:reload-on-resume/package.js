@@ -1,7 +1,7 @@
 Package.describe({
   name: "mdg:reload-on-resume",
   summary: "On Cordova, only allow the app to reload when the app is resumed.",
-  version: '1.0.0'
+  version: '1.0.0-rc0'
 });
 
 Package.on_use(function (api) {

@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Photos with one function call on desktop and mobile.",
-  version: "1.0.0"
+  version: "1.0.0-rc0"
 });
 
 Cordova.depends({
