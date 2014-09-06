@@ -13,15 +13,18 @@ if (Meteor.isClient) {
   });
 
   var onSuccess = function (imageData) {
-    var coords = Geolocation.currentLocation().coords;
+    var latLng = Geolocation.latLng();
+
+    if (! latLng) {
+      return;
+    }
 
     Photos.insert({
       image: imageData,
-      location: coords,
       createdAt: new Date(),
       marker: {
-        lat: coords.latitude,
-        lng: coords.longitude,
+        lat: latLng.lat,
+        lng: latLng.lng,
         infoWindowContent: "<img width='100' src='" + imageData + "' />"
       }
     });

@@ -90,7 +90,7 @@ GoogleMap.prototype.setMarkers = function (cursor) {
   });
 };
 
-GoogleMap.prototype.showCurrLocation = function () {
+GoogleMap.prototype.showCurrLocationMarker = function () {
   var self = this;
 
   var marker = new google.maps.Marker({
@@ -156,7 +156,7 @@ Template.googleMap.rendered = function () {
   if (options.center) {
     map.setCenter(options.center);
   } else if (options.geolocate) {
-    map.showCurrLocation();
+    map.showCurrLocationMarker();
     map.setCenter(Geolocation.latLng);
   }
 

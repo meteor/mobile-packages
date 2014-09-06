@@ -1,0 +1,39 @@
+{
+  "dependencies": [
+    [
+      "ejson",
+      "1.0.1-rc0"
+    ],
+    [
+      "json",
+      "1.0.0"
+    ],
+    [
+      "logging",
+      "1.0.2-cordova2"
+    ],
+    [
+      "meteor",
+      "1.1.0-rc0"
+    ],
+    [
+      "reactive-var",
+      "1.0.1-rc0"
+    ],
+    [
+      "reload",
+      "1.1.0-rc1"
+    ],
+    [
+      "tracker",
+      "1.0.2-rc1"
+    ],
+    [
+      "underscore",
+      "1.0.0"
+    ]
+  ],
+  "pluginDependencies": [],
+  "toolVersion": "meteor-tool@1.0.28-cordova6",
+  "format": "1.0"
+}

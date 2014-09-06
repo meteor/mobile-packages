@@ -2,23 +2,19 @@
   "dependencies": [
     [
       "blaze",
-      "1.0.3"
+      "2.0.0-rc1"
     ],
     [
       "deps",
-      "1.0.1"
+      "1.0.2-rc1"
     ],
     [
       "ejson",
-      "1.0.0"
+      "1.0.1-rc0"
     ],
     [
       "geojson-utils",
       "1.0.0"
-    ],
-    [
-      "geolocation",
-      "1.0.0-cordova2"
     ],
     [
       "htmljs",
@@ -37,16 +33,20 @@
       "1.0.0"
     ],
     [
+      "mdg:geolocation",
+      "1.0.0"
+    ],
+    [
       "meteor",
-      "1.0.2-cordova1"
+      "1.1.0-rc0"
     ],
     [
       "minimongo",
-      "1.0.1-cordova1"
+      "1.0.2-rc2"
     ],
     [
       "observe-sequence",
-      "1.0.1"
+      "1.0.2-rc0"
     ],
     [
       "ordered-dict",
@@ -57,12 +57,16 @@
       "1.0.0"
     ],
     [
-      "templating",
-      "1.0.4-cordova1"
+      "reactive-var",
+      "1.0.1-rc0"
     ],
     [
-      "ui",
-      "1.0.0"
+      "templating",
+      "1.0.6-rc0"
+    ],
+    [
+      "tracker",
+      "1.0.2-rc1"
     ],
     [
       "underscore",
@@ -70,6 +74,6 @@
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.14-cordova4",
+  "toolVersion": "meteor-tool@1.0.28-cordova6",
   "format": "1.0"
 }

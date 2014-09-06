@@ -2,7 +2,7 @@
   "dependencies": [
     [
       "meteor",
-      "1.0.2-cordova1"
+      "1.1.0-rc0"
     ],
     [
       "underscore",
@@ -10,6 +10,6 @@
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.14-cordova4",
+  "toolVersion": "meteor-tool@1.0.28-cordova6",
   "format": "1.0"
 }
