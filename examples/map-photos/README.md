@@ -3,7 +3,7 @@ Devshop Demo for Meteor Mobile: SoLoMo
 
 > Making Social, Local, Mobile Easier than Ever Before!
 
-<img src="cordova.jpg" width="300" />
+<img src="screenshot.jpg" width="300" />
 
 The developers at [Meteor](https://www.meteor.com/) have been hard at work building mobile support into the framework. Our goal is to make Meteor the easiest, fastest, and best way to build a great cross-platform application. This is an app we showed at Meteor Devshop August 2014 to demonstrate some of the features of the initial preview release of mobile support for Meteor.
 

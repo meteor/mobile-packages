@@ -107,6 +107,8 @@ Template.camera.events({
       closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
     } else if (browserNotSupportedError()) {
       closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
+    } else if (error.get()) {
+      closeAndCallback(new Meteor.Error("unknownError", "There was an error while accessing the camera."));
     } else {
       closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
     }

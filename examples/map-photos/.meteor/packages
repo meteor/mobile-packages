@@ -6,8 +6,6 @@
 standard-app-packages
 autopublish
 insecure
-geolocation
-camera
 mrt:moment
 iron-router
 ionic

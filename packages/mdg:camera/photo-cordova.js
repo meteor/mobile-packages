@@ -10,7 +10,7 @@ MeteorCamera.getPicture = function (options, callback) {
   };
 
   var failure = function (error) {
-    callback(error);
+    callback(new Meteor.Error("cordovaError", error));
   };
 
   navigator.camera.getPicture(success, failure, {
