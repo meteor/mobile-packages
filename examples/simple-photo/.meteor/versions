@@ -24,7 +24,7 @@ jquery@1.0.0
 json@1.0.0
 less@1.0.8-cordova6
 logging@1.0.2-cordova2
-mdg:camera@1.0.0
+mdg:camera@1.0.0-rc0
 meteor-platform@1.1.0-rc0
 meteor@1.1.0-rc0
 minifiers@1.1.0-rc0

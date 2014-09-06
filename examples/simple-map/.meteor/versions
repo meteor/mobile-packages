@@ -23,7 +23,7 @@ insecure@1.0.0
 jquery@1.0.0
 json@1.0.0
 logging@1.0.2-cordova2
-mdg:geolocation@1.0.0
+mdg:geolocation@1.0.0-rc0
 meteor-platform@1.1.0-rc0
 meteor@1.1.0-rc0
 minifiers@1.1.0-rc0
