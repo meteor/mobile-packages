@@ -21,7 +21,7 @@ The package `mdg:geolocation` provides a reactive interface to the device's GPS 
 
 The package `mdg:reload-on-resume` delays hot code push on mobile devices until the user has closed and re-opened the app, so that their experience is not interrupted by a reload.
 
-[Read the full reload-on-resume documentation here.](packages/mdg:geolocation/README.md)
+[Read the full reload-on-resume documentation here.](packages/mdg:reload-on-resume/README.md)
 
 ## Example Apps
 
