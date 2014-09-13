@@ -3,6 +3,8 @@ Mobile Packages
 
 This repository contains three simple Meteor packages that work on mobile and desktop. There are also three small example apps that demonstrate their usage.
 
+Currently compatible with Meteor 0.9.2-rc8, will be republished for the final 0.9.2 when it comes out.
+
 ## Packages
 
 ### Camera
