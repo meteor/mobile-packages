@@ -3,6 +3,8 @@ Mobile Packages
 
 This repository contains three simple Meteor packages that work on mobile and desktop. There are also three small example apps that demonstrate their usage.
 
+Currently compatible with Meteor 0.9.2-rc8, will be republished for the final 0.9.2 when it comes out.
+
 ## Packages
 
 ### Camera
@@ -21,7 +23,7 @@ The package `mdg:geolocation` provides a reactive interface to the device's GPS 
 
 The package `mdg:reload-on-resume` delays hot code push on mobile devices until the user has closed and re-opened the app, so that their experience is not interrupted by a reload.
 
-[Read the full reload-on-resume documentation here.](packages/mdg:geolocation/README.md)
+[Read the full reload-on-resume documentation here.](packages/mdg:reload-on-resume/README.md)
 
 ## Example Apps
 
