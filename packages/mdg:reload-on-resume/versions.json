@@ -22,7 +22,7 @@
     ],
     [
       "reload",
-      "1.1.0-rc1"
+      "1.1.0"
     ],
     [
       "tracker",
@@ -34,6 +34,6 @@
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.29-rc6",
+  "toolVersion": "meteor-tool@1.0.29",
   "format": "1.0"
 }
