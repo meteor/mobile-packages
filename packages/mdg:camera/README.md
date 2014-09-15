@@ -1,6 +1,9 @@
 # Meteor Camera Package
 
-Add it to your [Meteor](http://meteor.com) app with `meteor add mdg:camera`. The api is super simple - there is only one function to call:
+Add it to your [Meteor](http://meteor.com) app with `meteor add mdg:camera`. The api is super simple - there is only one function to call.
+
+> Warning: In the iOS simulator, the device camera is not accessible so you will get an error that says "source type 1 not available."
+> I'm working on a fallback for iOS that will use the photo library when the camera is not available, but for now just test in your web browser, a physical device, or the Android simulator.
 
 ### MeteorCamera.getPicture([options], callback)
 
