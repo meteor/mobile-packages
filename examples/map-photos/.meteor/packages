@@ -7,7 +7,7 @@ standard-app-packages
 autopublish
 insecure
 mrt:moment
-iron:router@0.9.3-rc0
+iron:router
 ionic
 accounts-ui
 accounts-facebook
@@ -15,4 +15,3 @@ google-maps
 mdg:reload-on-resume
 mdg:geolocation
 mdg:camera
-
