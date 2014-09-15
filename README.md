@@ -39,4 +39,4 @@ This example app uses the [Google Maps Static Maps API](https://developers.googl
 
 This is the app that was first used to demonstrate Meteor Cordova functionality at the Meteor Devshop in August 2014. It uses the Camera, Geolocation, and reload-on-resume packages, in addition to local packages for [Ionic Framework CSS](http://ionicframework.com/) and a simple implementation of the [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/).
 
-<img src="examples/map-photos/screenshot.jpg" width="300" />
+<img src="examples/solomo/screenshot.jpg" width="300" />
