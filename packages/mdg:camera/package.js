@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Photos with one function call on desktop and mobile.",
-  version: "1.0.0-rc0"
+  version: "1.0.0"
 });
 
 Cordova.depends({
@@ -10,7 +10,7 @@ Cordova.depends({
 Package.onUse(function(api) {
   api.export('MeteorCamera');
   api.use(["templating", "session", "ui", "blaze", "less", "reactive-var"]);
-  api.versionsFrom("METEOR@0.9.2-rc0");
+  api.versionsFrom("METEOR@0.9.2");
 
   api.addFiles('photo.html');
   api.addFiles('photo.js');
