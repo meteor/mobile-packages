@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Cordova.depends({
-  "org.apache.cordova.geolocation": "0.3.9"
+  "org.apache.cordova.geolocation": "0.3.10"
 });
 
 Package.on_use(function (api) {
