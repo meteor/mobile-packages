@@ -1,7 +1,7 @@
 Package.describe({
   name: "mdg:geolocation",
   summary: "Provides reactive geolocation on desktop and mobile.",
-  version: "1.0.1",
+  version: "1.0.2",
   git: "https://github.com/meteor/mobile-packages"
 });
 
