@@ -6,7 +6,7 @@
     ],
     [
       "ejson",
-      "1.0.1-rc0"
+      "1.0.1"
     ],
     [
       "geojson-utils",
@@ -34,15 +34,15 @@
     ],
     [
       "meteor",
-      "1.0.0"
+      "1.1.0"
     ],
     [
       "minimongo",
-      "1.0.2-glasser1"
+      "1.0.2"
     ],
     [
       "observe-sequence",
-      "1.0.2-rc0"
+      "1.0.2"
     ],
     [
       "ordered-dict",
@@ -54,7 +54,7 @@
     ],
     [
       "reactive-dict",
-      "1.0.1-glasser1"
+      "1.0.2"
     ],
     [
       "reactive-var",
@@ -70,7 +70,7 @@
     ],
     [
       "tracker",
-      "1.0.2-rc0"
+      "1.0.2"
     ],
     [
       "ui",
@@ -82,6 +82,6 @@
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.29",
+  "toolVersion": "meteor-tool@1.0.34",
   "format": "1.0"
 }
