@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Cordova.depends({
-  "org.apache.cordova.camera":"0.3.0"
+  "org.apache.cordova.camera":"0.3.3"
 });
 
 Package.onUse(function(api) {
