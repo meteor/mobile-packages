@@ -46,7 +46,7 @@ localstorage@1.0.1
 logging@1.0.5
 mdg:camera@1.1.2
 mdg:geolocation@1.0.2
-mdg:reload-on-resume@1.0.1
+mdg:reload-on-resume@1.0.4
 meteor-platform@1.2.0
 meteor@1.1.3
 minifiers@1.1.2
