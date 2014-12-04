@@ -6,9 +6,7 @@ document.addEventListener("resume", function () {
 }, false);
 
 Reload._onMigrate(function (retry) {
-  if (! newVersionAvailable) {
-    newVersionAvailable.set(true);
-  }
+  newVersionAvailable.set(true);
 
   if (hasResumed) {
     return [true, {}];

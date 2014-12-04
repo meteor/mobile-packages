@@ -1,8 +1,12 @@
 {
   "dependencies": [
     [
+      "base64",
+      "1.0.0"
+    ],
+    [
       "ejson",
-      "1.0.1-rc0"
+      "1.0.2"
     ],
     [
       "json",
@@ -10,11 +14,11 @@
     ],
     [
       "logging",
-      "1.0.2-cordova1"
+      "1.0.3"
     ],
     [
       "meteor",
-      "1.0.0"
+      "1.1.0"
     ],
     [
       "reactive-var",
@@ -26,7 +30,7 @@
     ],
     [
       "tracker",
-      "1.0.2-rc0"
+      "1.0.2"
     ],
     [
       "underscore",
@@ -34,6 +38,6 @@
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.29",
+  "toolVersion": "meteor-tool@1.0.35",
   "format": "1.0"
 }
