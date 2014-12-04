@@ -1,7 +1,7 @@
 var Photos = new Meteor.Collection("photos");
 
 if (Meteor.isClient) {
-  var selectedMarkerId = new Blaze.ReactiveVar(null);
+  var selectedMarkerId = new ReactiveVar();
 
   Deps.autorun(function () {
     selectedMarkerId.set(Session.get("currentPhoto"));
@@ -9,7 +9,9 @@ if (Meteor.isClient) {
 
   Template.map.helpers({
     markers: Photos.find(),
-    selectedMarkerId: selectedMarkerId
+    selectedMarkerId: function () {
+      return selectedMarkerId.get();
+    }
   });
 
   var onSuccess = function (imageData) {

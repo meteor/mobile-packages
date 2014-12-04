@@ -6,7 +6,19 @@
     ],
     [
       "blaze",
-      "2.0.2"
+      "2.0.3"
+    ],
+    [
+      "callback-hook",
+      "1.0.1"
+    ],
+    [
+      "check",
+      "1.0.2"
+    ],
+    [
+      "ddp",
+      "1.0.11"
     ],
     [
       "deps",
@@ -37,16 +49,24 @@
       "1.0.1"
     ],
     [
+      "logging",
+      "1.0.5"
+    ],
+    [
+      "mdg:components",
+      "1.0.0-pre.3"
+    ],
+    [
       "mdg:geolocation",
       "1.0.2"
     ],
     [
       "meteor",
-      "1.1.2"
+      "1.1.3"
     ],
     [
       "minimongo",
-      "1.0.4"
+      "1.0.5"
     ],
     [
       "observe-sequence",
@@ -65,8 +85,12 @@
       "1.0.3"
     ],
     [
+      "retry",
+      "1.0.1"
+    ],
+    [
       "templating",
-      "1.0.8"
+      "1.0.9"
     ],
     [
       "tracker",
@@ -78,6 +102,6 @@
     ]
   ],
   "pluginDependencies": [],
-  "toolVersion": "meteor-tool@1.0.34",
+  "toolVersion": "meteor-tool@1.0.35",
   "format": "1.0"
 }

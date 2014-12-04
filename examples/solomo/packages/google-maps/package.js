@@ -4,7 +4,7 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.use(["templating", "mdg:geolocation"], "client");
+  api.use(["templating", "mdg:geolocation", "mdg:components@1.0.0-pre.3"], "client");
 
   api.export('GoogleMaps', "client");
 

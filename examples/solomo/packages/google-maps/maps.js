@@ -1,51 +1,22 @@
-var GoogleMap = function (element) {
+var GoogleMap = function () {};
+
+GoogleMap.prototype.setCenter = function (center) {
   var self = this;
 
-  self.element = element;
-  self.markers = {};
-  self.selectedMarkerId = null;
-
-  self.infowindow = new google.maps.InfoWindow({ content: "" });
-  google.maps.event.addListener(self.infowindow, "closeclick", function () {
-    if (self.selectedMarkerId) {
-      self.selectedMarkerId.set(null);
+  if (self.selectedMarkerId && self.selectedMarkerId.get()) {
+    // marker is currently selected, don't update the center until it's closed
+    var markerId = self.selectedMarkerId.get();
+    if (self.markers[markerId]) {
+      var marker = self.markers[markerId];
+      self.gmap.setCenter(marker.getPosition());
     }
-  });
-
-  var lat = 0, lng = 0;
-  var mapOptions = {
-    center: new google.maps.LatLng(lat, lng),
-    zoom: 17
-  };
-  self.gmap = new google.maps.Map(element, mapOptions);
-};
-
-// accepts reactive function that returns {lat: Number, lng: Number}
-GoogleMap.prototype.setCenter = function (centerFunc) {
-  var self = this;
-
-  if (self.centerComputation) {
-    self.centerComputation.stop();
+    return;
   }
 
-  self.centerComputation = Deps.autorun(function () {
-    var center = centerFunc();
-
-    if (self.selectedMarkerId && self.selectedMarkerId.get()) {
-      // marker is currently selected, don't update the center until it's closed
-      var markerId = self.selectedMarkerId.get();
-      if (self.markers[markerId]) {
-        var marker = self.markers[markerId];
-        self.gmap.setCenter(marker.getPosition());
-      }
-      return;
-    }
-
-    if (center) {
-      var latLng = new google.maps.LatLng(center.lat, center.lng);
-      self.gmap.setCenter(latLng);
-    }
-  });
+  if (center && self.gmap) {
+    var latLng = new google.maps.LatLng(center.lat, center.lng);
+    self.gmap.setCenter(latLng);
+  }
 };
 
 // accepts minimongo cursor
@@ -90,55 +61,29 @@ GoogleMap.prototype.setMarkers = function (cursor) {
   });
 };
 
-GoogleMap.prototype.showCurrLocationMarker = function () {
+GoogleMap.prototype.showLocationMarker = function (latLng) {
   var self = this;
 
-  var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(0, 0),
-    map: self.gmap,
-    icon: new google.maps.MarkerImage(icon, null, null, null,
-      new google.maps.Size(20, 20))
-  });
-
-  Deps.autorun(function () {
-    var latLng = Geolocation.latLng();
-
-    if (latLng) {
-      marker.setMap(self.gmap);
-      marker.setPosition(new google.maps.LatLng(latLng.lat, latLng.lng));
-    }
-  });
-};
-
-// accepts reactive var
-GoogleMap.prototype.bindToSelectedMarkerId = function (selectedMarkerId) {
-  var self = this;
-
-  self.selectedMarkerId = selectedMarkerId;
-
-  if (self.selectedMarkerIdComputation) {
-    self.selectedMarkerIdComputation.stop();
+  if(! self.locationMarker) {
+    self.locationMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(0, 0),
+      icon: new google.maps.MarkerImage(icon, null, null, null,
+        new google.maps.Size(20, 20))
+    });
   }
 
-  self.selectedMarkerIdComputation = Deps.autorun(function () {
-    var markerId = self.selectedMarkerId.get();
-
-    if (markerId) {
-      self.syncWithSelectedMarkerId(markerId);
-    }
-  });
+  if (latLng) {
+    self.locationMarker.setMap(self.gmap);
+    self.locationMarker.setPosition(new google.maps.LatLng(latLng.lat, latLng.lng));
+  } else {
+    self.locationMarker.setMap(null);
+  }
 };
 
 GoogleMap.prototype.selectMarker = function (markerId) {
   var self = this;
 
-  if (self.selectedMarkerId) {
-    self.selectedMarkerId.set(markerId);
-  }
-};
-
-GoogleMap.prototype.syncWithSelectedMarkerId = function (markerId) {
-  var self = this;
+  // XXX trigger event on parent
 
   var marker = self.markers[markerId];
   if (marker) {
@@ -147,22 +92,47 @@ GoogleMap.prototype.syncWithSelectedMarkerId = function (markerId) {
   }
 };
 
-Template.googleMap.rendered = function () {
-  var template = this;
+Component.define(Template.googleMap, {
+  created: function () {
+    var self = this;
 
-  var map = new GoogleMap(template.firstNode);
-  var options = template.data;
+    self.markers = {};
+    self.selectedMarkerId = null;
 
-  if (options.center) {
-    map.setCenter(options.center);
-  } else if (options.geolocate) {
-    map.showCurrLocationMarker();
-    map.setCenter(Geolocation.latLng);
+    // load in all of the methods from the GoogleMap class
+    _.extend(self, GoogleMap.prototype);
+  },
+
+  rendered: function () {
+    var self = this;
+
+    self.element = self.find(".google-map");
+
+    self.infowindow = new google.maps.InfoWindow({ content: "" });
+    google.maps.event.addListener(self.infowindow, "closeclick", function () {
+      // XXX trigger event
+    });
+
+    var lat = 0, lng = 0;
+    var mapOptions = {
+      center: new google.maps.LatLng(lat, lng),
+      zoom: 17
+    };
+    self.gmap = new google.maps.Map(self.element, mapOptions);
+
+    self.autorun(function () {
+      if (self.args.get("geolocate")) {
+        self.showLocationMarker(Geolocation.latLng());
+        self.setCenter(Geolocation.latLng());
+      }
+    });
+    
+    self.autorun(function () {
+      self.selectMarker(self.args.get("selectedMarkerId"));
+    });
+
+    self.autorun(function () {
+      self.setMarkers(self.args.get("markers"));
+    });
   }
-
-  if (options.selectedMarkerId) {
-    map.bindToSelectedMarkerId(options.selectedMarkerId);
-  }
-
-  map.setMarkers(options.markers);
-};
+});
