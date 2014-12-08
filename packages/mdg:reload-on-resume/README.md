@@ -12,4 +12,4 @@ In addition to changing the behavior of hot code push, this package provides a m
 
 ### Reload.isWaitingForResume()
 
-A reactive function that returns `true` if a new version of the app has been downloading and the framework is waiting until the app is closed and reopened. Can be used to display a message to the user that says "new version available, restart the app to update."
+A reactive function that returns `true` if a new version of the app has been downloading and the framework is waiting until the app is closed and reopened. Can be used to display a message to the user that says "new version available, restart the app to update." You can also use `window.location.reload()` to reload the page to the newest version of the app.
