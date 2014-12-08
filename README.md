@@ -11,19 +11,19 @@ These packages work with Meteor 0.9.2 and above.
 
 The package `mdg:camera` allows you to take photos on desktop and mobile with a single function call.
 
-[Read the full Camera documentation here.](packages/mdg:camera/README.md)
+[Read the full Camera documentation here.](https://github.com/meteor/mobile-packages/blob/master/packages/mdg:camera/README.md)
 
 ### Geolocation
 
 The package `mdg:geolocation` provides a reactive interface to the device's GPS location.
 
-[Read the full Geolocation documentation here.](packages/mdg:geolocation/README.md)
+[Read the full Geolocation documentation here.](https://github.com/meteor/mobile-packages/blob/master/packages/mdg:geolocation/README.md)
 
 ### reload-on-resume
 
 The package `mdg:reload-on-resume` delays hot code push on mobile devices until the user has closed and re-opened the app, so that their experience is not interrupted by a reload.
 
-[Read the full reload-on-resume documentation here.](packages/mdg:reload-on-resume/README.md)
+[Read the full reload-on-resume documentation here.](https://github.com/meteor/mobile-packages/blob/master/packages/mdg:reload-on-resume/README.md)
 
 ## Example Apps
 
