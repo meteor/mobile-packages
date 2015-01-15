@@ -10,10 +10,22 @@ There are currently no options to set. Every method is reactive using [Tracker](
 
 Returns the [position error](https://developer.mozilla.org/en-US/docs/Web/API/PositionError) that is currently preventing position updates.
 
-### Geolocation.currentLocation()
+### Geolocation.currentLocation(options)
 
 Returns the [position](https://developer.mozilla.org/en-US/docs/Web/API/Position) that is reported by the device, or null if no position is available.
 
-### Geolocation.latLng()
+The `options` parameter is optional; if provided it as if `Geolocation.setOptions` was called before returning the position.
+
+### Geolocation.latLng(options)
 
 A simple shorthand for currentLocation() when all you need is the latitude and longitude. Returns an object that has `lat` and `lng` keys.
+
+The `options` parameter is optional; if provided it as if `Geolocation.setOptions` was called before returning the position.
+
+### Geolocation.setOptions(options)
+
+Provide [PositionOptions](https://developer.mozilla.org/en-US/docs/Web/API/PositionOptions) to manage power consumption on mobile devices.  The options can be reactive.
+
+### Geolocation.setPaused(boolean)
+
+If the parameter is `true`, temporarily halts reactive position updates to reduce power consumption.
