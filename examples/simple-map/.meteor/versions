@@ -25,7 +25,7 @@ jquery@1.0.1
 json@1.0.1
 livedata@1.0.11
 logging@1.0.4
-mdg:geolocation@1.0.2
+mdg:geolocation@1.0.3
 meteor-platform@1.1.2
 meteor@1.1.2
 minifiers@1.1.1
