@@ -13,6 +13,7 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `width` An integer that specifies the minimum width of the returned photo.
 - `height` An integer that specifies the minimum height of the returned photo.
 - `quality` A number from 0 to 100 specifying the desired quality of JPEG encoding.
+- `correctOrientation` A boolean that specifies if photo orientation should be stored with respect to device orientation at time of capture.
 
 #### callback(error, data)
 
