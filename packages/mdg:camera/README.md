@@ -2,6 +2,8 @@
 
 Add it to your [Meteor](http://meteor.com) app with `meteor add mdg:camera`. The api is super simple - there is only one function to call.
 
+> Warning: This package is meant to be used in a PhoneGap app, functionality probably won't work in mobile browsers.
+
 ### MeteorCamera.getPicture([options], callback)
 
 Prompt the user to take a photo with their device and get the picture as a Data URI in JPEG format.
