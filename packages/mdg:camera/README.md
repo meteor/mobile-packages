@@ -13,6 +13,9 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `width` An integer that specifies the minimum width of the returned photo.
 - `height` An integer that specifies the minimum height of the returned photo.
 - `quality` A number from 0 to 100 specifying the desired quality of JPEG encoding.
+- `correctOrientation` A boolean true or false specifies if the result image is oriented properly.
+
+_more options can be found [here](http://docs.phonegap.com/en/edge/cordova_camera_camera.md.html#cameraOptions)_
 
 #### callback(error, data)
 
