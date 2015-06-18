@@ -7,12 +7,6 @@ var location = new ReactiveVar(null);
 // error variable and dependency
 var error = new ReactiveVar(null);
 
-// options for watchPosition
-var options = {
-  enableHighAccuracy: true,
-  maximumAge: 0
-};
-
 var onError = function (newError) {
   error.set(newError);
 };
@@ -22,8 +16,13 @@ var onPosition = function (newLocation) {
   error.set(null);
 };
 
-var startWatchingPosition = function () {
+var startWatchingPosition = function (options) {
   if (! watchingPosition && navigator.geolocation) {
+    options = options || {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 10000
+    };
     navigator.geolocation.watchPosition(onPosition, onError, options);
     watchingPosition = true;
   }
@@ -42,8 +41,8 @@ Geolocation = {
    * [position error](https://developer.mozilla.org/en-US/docs/Web/API/PositionError)
    * that is currently preventing position updates.
    */
-  error: function () {
-    startWatchingPosition();
+  error: function (options) {
+    startWatchingPosition(options);
     return error.get();
   },
 
@@ -53,8 +52,8 @@ Geolocation = {
    * [position](https://developer.mozilla.org/en-US/docs/Web/API/Position)
    * that is reported by the device, or null if no position is available.
    */
-  currentLocation: function () {
-    startWatchingPosition();
+  currentLocation: function (options) {
+    startWatchingPosition(options);
     return location.get();
   },
   // simple version of location; just lat and lng
@@ -64,8 +63,8 @@ Geolocation = {
    * @return {Object | null} An object with `lat` and `lng` properties,
    * or null if no position is available.
    */
-  latLng: function () {
-    var loc = Geolocation.currentLocation();
+  latLng: function (options) {
+    var loc = Geolocation.currentLocation(options);
 
     if (loc) {
       return {
