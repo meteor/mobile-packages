@@ -26,7 +26,7 @@ json@1.0.1
 less@1.0.10
 livedata@1.0.11
 logging@1.0.4
-mdg:camera@1.1.1
+mdg:camera@1.1.4
 meteor-platform@1.1.2
 meteor@1.1.2
 minifiers@1.1.1
