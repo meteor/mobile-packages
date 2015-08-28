@@ -1,0 +1,85 @@
+<template name="camera">
+  <div class="camera-overlay">
+    {{! used to make the background dark}}
+  </div>
+
+  <div class="camera-popup {{#if permissionDeniedError}}camera-popup-wide{{/if}}">
+    {{#if error}}
+      {{#if permissionDeniedError}}
+        {{> permissionDenied}}
+      {{else}}
+        {{#if browserNotSupportedError}}
+          {{> genericError message="Sorry, this browser is currently not supported for camera functionality."}}
+        {{else}}
+          {{> genericError message="There was an error accessing the camera."}}
+        {{/if}}
+      {{/if}}
+    {{else}}
+      {{#if photo}}
+        <div class="center">
+        <!-- Buttons above the image works better on small screens -->
+          <div>
+            <button class="btn use-photo btn-success">Use Photo</button> 
+            <button class="button new-photo">Take New Photo</button>
+          </div>
+          <img src="{{photo}}" class="photo-preview"/>
+        </div>
+      {{else}}
+        {{> viewfinder}}
+      {{/if}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="viewfinder">
+  <div class="viewfinder">
+    
+    <div>
+      {{#if waitingForPermission}}
+        <p>Waiting for camera permissions...</p>
+      {{else}}
+        <!-- Buttons above the image works better on small screens -->
+        <button class="button shutter">Take Photo</button>
+      {{/if}}
+      <button class="button cancel">Cancel</button>
+    </div>
+    <video id="video" class="{{#if waitingForPermission}}hidden{{/if}}">
+      </video>
+  </div>
+
+  <canvas id="canvas" style="visibility: hidden"></canvas>
+</template>
+
+<template name="genericError">
+  <div class="generic-error">
+    <p>{{message}}</p>
+    <button class="button cancel">Close Popup</button>
+  </div>
+</template>
+
+<template name="permissionDenied">
+  <div class="permission-denied-error">
+    <h2>Camera Permissions Denied</h2>
+
+    <p>
+      You have denied this app permission to use your camera.
+      If you would like to allow permissions, follow the directions for your
+      browser below.
+    </p>
+
+    <dl class="permissions-howto">
+      <dt>Google Chrome</dt>
+        <dd>Go to Settings > "Show advanced settings..." >
+          "Content settings..." > Media heading > "Manage exceptions...",
+          then find this website in the list and allow video capture.</dd>
+      <dt>Mozilla Firefox</dt>
+        <dd>Reload the page and try again.</dd>
+      <dt>Opera</dt>
+        <dd>Go to Preferences > Websites > Media heading >
+          "Manage exceptions...", then find this website in the list and
+          allow video capture.</dd>
+    </dl>
+
+    <button class="button cancel">Close Popup</button>
+  </div>
+</template>

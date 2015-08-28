@@ -1,0 +1,102 @@
+@camera-buttons-color: #596595;
+@camera-buttons-color-border: darken(@camera-buttons-color, 10%);
+@camera-buttons-color-active: lighten(@camera-buttons-color, 10%);
+@camera-buttons-color-active-border: darken(@camera-buttons-color-active, 10%);
+
+.camera-popup {
+  position: fixed;
+  z-index: 1000;
+  top: 20%;
+  width: 320px;
+  left: 50%;
+  margin-left: -150px;
+  font-family: sans-serif;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  line-height: 1.3em;
+  pointer-events: auto;
+
+  &.camera-popup-wide {
+    width: 480px;
+    margin-left: -240px;
+    top: 5%;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .viewfinder {
+    text-align: center;
+  }
+
+  #video {
+    width: 280px;
+    height: 210px;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .photo-preview {
+    width: 280px;
+  }
+
+  padding: 20px;
+  border-radius: 10px;
+
+  canvas {
+    display: none;
+  }
+
+  .generic-error {
+    text-align: center;
+  }
+
+  .permission-denied-error {
+    h2 {
+      margin-top: 0;
+      color: @camera-buttons-color;
+      border-bottom: 1px solid @camera-buttons-color;
+      padding-bottom: 10px;
+      line-height: 1.3em;
+    }
+  }
+
+  .permissions-howto {
+    dd {
+      margin: 5px 0 20px 10px;
+      padding: 0;
+      font-size: 0.8em;
+      color: #444;
+    }
+  }
+
+  button.button{
+    color: white;
+    padding: 6px 8px;
+    border-radius: 5px;
+
+    background-color: @camera-buttons-color;
+    border: 1px solid @camera-buttons-color-border;
+
+    &:active {
+      background-color: @camera-buttons-color-active;
+      border: 1px solid @camera-buttons-color-active-border;
+    }
+  }
+}
+
+.camera-overlay {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+
+  background: rgba(0, 0, 0, 0.4);
+}
