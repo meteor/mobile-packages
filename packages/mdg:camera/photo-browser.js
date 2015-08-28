@@ -7,6 +7,7 @@ var waitingForPermission = new ReactiveVar(null);
 
 var canvasWidth = 0;
 var canvasHeight = 0;
+var magnification = 4;    // Magnification factor - more effective than image quality
 
 var quality = 80;
 
@@ -58,8 +59,8 @@ Template.viewfinder.rendered = function() {
   }, success, failure);
 
   // resize viewfinder to a reasonable size, not necessarily photo size
-  var viewfinderWidth = 320;
-  var viewfinderHeight = 240;
+  var viewfinderWidth = 280;
+  var viewfinderHeight = 210;
   var resized = false;
   video.addEventListener('canplay', function() {
     if (! resized) {
@@ -123,7 +124,8 @@ Template.viewfinder.events({
   'click .shutter': function (event, template) {
     var video = template.find("video");
     var canvas = template.find("canvas");
-
+    canvasWidth = video.width * magnification;    // Pick up the dimensions from the video frame 
+    canvasHeight = video.height * magnification;  // - then it's not clipped (if in portrait mode)
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
@@ -131,7 +133,7 @@ Template.viewfinder.events({
     photo.set(data);
     stream.stop();
   }
-});
+}); 
 
 Template.viewfinder.helpers({
   "waitingForPermission": function () {
@@ -142,8 +144,10 @@ Template.viewfinder.helpers({
 /**
  * @summary Get a picture from the device's default camera.
  * @param  {Object}   options  Options
+ * @param {Number} options.magnification - Magnification factor x 640px. Use 1 to get a 640x480 image
  * @param {Number} options.height The minimum height of the image
- * @param {Number} options.width The minimum width of the image
+ * @param {Number} options.width The minimum width of the image - NOT REQUIRED, JUST SPECIFY WIDTH, 
+ *                               ASPECT RATIO is preserved
  * @param {Number} options.quality [description]
  * @param  {Function} callback A callback that is called with two arguments:
  * 1. error, an object that contains error.message and possibly other properties
@@ -158,22 +162,26 @@ MeteorCamera.getPicture = function (options, callback) {
     options = {};
   }
 
-  desiredHeight = options.height || 640;
-  desiredWidth = options.width || 480;
+  magnification = options.magnification || 640/280;   // We are using a 280px wide video control as a starting point
+
+  if (options.width) {
+    magnification = options.width / 280; 
+  }
+  desiredHeight = options.height || 480;    // Deprecated
 
   // Canvas#toDataURL takes the quality as a 0-1 value, not a percentage
   quality = (options.quality || 49) / 100;
 
-  if (desiredHeight * 4 / 3 > desiredWidth) {
-    canvasWidth = desiredHeight * 4 / 3;
-    canvasHeight = desiredHeight;
-  } else {
-    canvasHeight = desiredWidth * 3 / 4;
-    canvasWidth = desiredWidth;
-  }
+//  if (desiredHeight * 4 / 3 > desiredWidth) {
+//    canvasWidth = desiredHeight * 4 / 3;
+//    canvasHeight = desiredHeight;
+//  } else {
+//    canvasHeight = desiredWidth * 3 / 4;
+//    canvasWidth = desiredWidth;
+//  }
 
-  canvasWidth = Math.round(canvasWidth);
-  canvasHeight = Math.round(canvasHeight);
+//  canvasWidth = Math.round(canvasWidth);
+//  canvasHeight = Math.round(canvasHeight);
 
   var view;
   

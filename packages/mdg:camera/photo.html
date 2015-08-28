@@ -17,11 +17,12 @@
     {{else}}
       {{#if photo}}
         <div class="center">
-          <img src="{{photo}}" class="photo-preview" />
+        <!-- Buttons above the image works better on small screens -->
           <div>
-            <button class="button use-photo">Use Photo</button>
+            <button class="btn use-photo btn-success">Use Photo</button> 
             <button class="button new-photo">Take New Photo</button>
           </div>
+          <img src="{{photo}}" class="photo-preview"/>
         </div>
       {{else}}
         {{> viewfinder}}
@@ -32,17 +33,18 @@
 
 <template name="viewfinder">
   <div class="viewfinder">
-    <video id="video" class="{{#if waitingForPermission}}hidden{{/if}}">
-      </video>
     
     <div>
       {{#if waitingForPermission}}
         <p>Waiting for camera permissions...</p>
       {{else}}
+        <!-- Buttons above the image works better on small screens -->
         <button class="button shutter">Take Photo</button>
       {{/if}}
       <button class="button cancel">Cancel</button>
     </div>
+    <video id="video" class="{{#if waitingForPermission}}hidden{{/if}}">
+      </video>
   </div>
 
   <canvas id="canvas" style="visibility: hidden"></canvas>
