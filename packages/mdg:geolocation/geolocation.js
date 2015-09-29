@@ -1,3 +1,6 @@
+// https://developer.mozilla.org/en-US/docs/Web/API/PositionError
+var PERMISSION_DENIED = 1;
+
 // is location refreshing currently on?
 var watchingPosition = false;
 
@@ -14,18 +17,39 @@ var options = {
   timeout: 10000
 };
 
+var polling = false;
+var currentWatch = null;
+
+// calling watchPosition checks to see whether you now have gps permissions
+var checkForPermissionChanges = function () {
+  navigator.geolocation.clearWatch(currentWatch);
+  currentWatch = navigator.geolocation.watchPosition(onPosition, onError, options);
+
+  Meteor.setTimeout(function () {
+    if (polling) {
+      checkForPermissionChanges();
+    }
+  }, 10000);
+};
+
 var onError = function (newError) {
   error.set(newError);
+
+  if (newError.code === PERMISSION_DENIED && ! polling) {
+    polling = true;
+    checkForPermissionChanges();
+  }
 };
 
 var onPosition = function (newLocation) {
   location.set(newLocation);
   error.set(null);
+  polling = false;
 };
 
 var startWatchingPosition = function () {
   if (! watchingPosition && navigator.geolocation) {
-    navigator.geolocation.watchPosition(onPosition, onError, options);
+    currentWatch = navigator.geolocation.watchPosition(onPosition, onError, options);
     watchingPosition = true;
   }
 };
@@ -59,7 +83,7 @@ Geolocation = {
     return location.get();
   },
   // simple version of location; just lat and lng
-  
+
   /**
    * @summary Get the current latitude and longitude
    * @return {Object | null} An object with `lat` and `lng` properties,
