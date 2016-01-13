@@ -114,7 +114,7 @@ Template.camera.events({
     }
     
     if (stream) {
-      stream.stop();
+      stream.getTracks().forEach(function (track) { track.stop(); });
     }
   }
 });
