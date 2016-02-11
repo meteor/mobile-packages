@@ -188,6 +188,8 @@ Template.camera.events({
       MeteorCamera.closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
     }
   },
+
+  // This part could be moved outside this package and each dev could add its own logic, because with MeteorCamera object he gets all he needs
   "change #videofallback": function(ev, tpl) {
     var files = ev.currentTarget.files; // FileList
     if(!files.length){
@@ -197,33 +199,12 @@ Template.camera.events({
 
     var reader  = new FileReader();
     reader.addEventListener("load", function () {
-      photo.set(reader.result);
+      MeteorCamera.getPhoto().set(reader.result);
     }, false);
 
     if (files[0]) {
       reader.readAsDataURL(files[0]);
     }
-/*
-    var vendorURL = window.URL || window.webkitURL;
-    var imageUrl = vendorURL.createObjectURL(files[0]);
-    var image = new Image();
-    image.src = imageUrl;
-
-    var canvas = tpl.find("canvas");
-
-    var fileCanvasWidth = canvas.width / image.width;
-    var fileCanvasHeight = canvas.height / image.height;
-    var ratio = Math.min(fileCanvasWidth, fileCanvasHeight);
-
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-    canvas.getContext('2d').drawImage(image,
-      0, 0, image.width, image.height,
-      0, 0, image.width*ratio, image.height*ratio);
-    var data = canvas.toDataURL('image/jpeg', settings.quality);
-    photo.set(imageUrl /*data* /);
- */
-
   }
 });
 
