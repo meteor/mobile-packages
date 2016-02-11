@@ -14,7 +14,7 @@
             {{> genericError message="There was an error accessing the camera."}}
           {{/if}}
         {{/if}}
-        <input type="file" accept="image/*" multiple="false" id="videofallback">
+        {{> cameraFallback}}
       {{/if}}
       {{#if photo}}
         <div class="center">
@@ -28,6 +28,15 @@
         {{> viewfinder}}
       {{/if}}
   </div>
+</template>
+
+<template name="cameraFallback">
+  <input type="file" accept="image/*" multiple="false" id="videofallback"/>
+  {{>cameraCanvas}}
+</template>
+
+<template name="cameraCanvas">
+  <canvas id="canvas" style="visibility: hidden;"></canvas>
 </template>
 
 <template name="viewfinder">
@@ -45,7 +54,7 @@
     </div>
   </div>
 
-  <canvas id="canvas" style="visibility: hidden"></canvas>
+  {{> cameraCanvas}}
 </template>
 
 <template name="genericError">
