@@ -10,11 +10,12 @@
       {{else}}
         {{#if browserNotSupportedError}}
           {{> genericError message="Sorry, this browser is currently not supported for camera functionality."}}
-        {{else}}
-          {{> genericError message="There was an error accessing the camera."}}
+          {{else}}
+            {{> genericError message="There was an error accessing the camera."}}
+          {{/if}}
         {{/if}}
+        <input type="file" accept="image/*" multiple="false" id="videofallback">
       {{/if}}
-    {{else}}
       {{#if photo}}
         <div class="center">
           <img src="{{photo}}" class="photo-preview" />
@@ -26,7 +27,6 @@
       {{else}}
         {{> viewfinder}}
       {{/if}}
-    {{/if}}
   </div>
 </template>
 
@@ -61,7 +61,7 @@
 
     <p>
       You have denied this app permission to use your camera.
-      If you would like to allow permissions, follow the directions for your
+      If you would like to allow permissions, follow the directions for your 
       browser below.
     </p>
 

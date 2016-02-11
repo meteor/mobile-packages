@@ -1,5 +1,35 @@
-var stream;
-var closeAndCallback;
+// merge defaults settings with Meteor settings if exists
+var settings = (function(defaults) {
+  var settings =
+  {
+    camera: {
+      type: "back",
+      width: 640,
+      height: 480
+    },
+    quality: 80,
+    viewFinder: {
+        width: 320,
+        height: 240
+    }
+  };
+
+  if (!defaults) return settings;
+
+  if (defaults.camera) {
+    settings.camera = _.extend(settings.camera, defaults.camera);
+  }
+
+  if (defaults.quality && check(defaults.quality, Number)) {
+    settings.quality = defaults.quality;
+  }
+
+  if (defaults.viewFinder) {
+    settings.viewFinder = _.extend(settings.viewFinder, defaults.viewFinder);
+  }
+
+  return settings;
+})(Meteor.settings.public.MeteorCamera);
 
 var photo = new ReactiveVar(null);
 var error = new ReactiveVar(null);
@@ -8,9 +38,7 @@ var waitingForPermission = new ReactiveVar(null);
 var canvasWidth = 0;
 var canvasHeight = 0;
 
-var quality = 80;
-
-Template.viewfinder.rendered = function() {
+Template.viewfinder.onRendered(function() {
   var template = this;
 
   waitingForPermission.set(true);
@@ -19,13 +47,13 @@ Template.viewfinder.rendered = function() {
 
   // stream webcam video to the <video> element
   var success = function(newStream) {
-    stream = newStream;
+    MeteorCamera.setStream(newStream);
 
     if (navigator.mozGetUserMedia) {
-      video.mozSrcObject = stream;
+      video.mozSrcObject = MeteorCamera.getStream();
     } else {
       var vendorURL = window.URL || window.webkitURL;
-      video.src = vendorURL.createObjectURL(stream);
+      video.src = vendorURL.createObjectURL(MeteorCamera.getStream());
     }
     video.play();
 
@@ -51,25 +79,71 @@ Template.viewfinder.rendered = function() {
     return;
   }
 
-  // initiate request for webcam
-  navigator.getUserMedia({
+  /**
+   * Hack to force Wished camera
+   */
+  var wishedCameraSource;
+  var gotWishedCameraSource = function (sourceInfos) {
+    for (var i = 0; i < sourceInfos.length; ++i) {
+      var sourceInfo = sourceInfos[i];
+      var option = document.createElement('option');
+      option.value = sourceInfo.id;
+
+      console.log("sourceInfo", i, sourceInfo, sourceInfo.kind);
+
+      if (sourceInfo.kind == 'video') {
+        wishedCameraSource = sourceInfo;
+        var isWished = sourceInfo.label.match(settings.camera.type);
+        console.log("source id", wishedCameraSource, isWished);
+
+        if (isWished) {
+          console.log("wished found, break loop", wishedCameraSource, isWished);
+          i = sourceInfos.length;
+          return;
+        }
+      }
+    }
+
+    if (!wishedCameraSource) {
+      failure("VIDEO_NOT_SUPPORTED");
+      return;
+    }
+
+    // initiate request for webcam
+    var userMediaConfig = {
+      video: {
+        optional: [{
+          sourceId: wishedCameraSource.id
+        }]
+      },
+      audio: false
+    };
+
+    navigator.getUserMedia(userMediaConfig, success, failure);
+  };
+
+  // @TODO : be compliant with mobile IE/Safari/Other and not only Chrome
+  if (MediaStreamTrack) {
+    MediaStreamTrack.getSources(gotWishedCameraSource);
+  } else {
+    // initiate request for webcam
+    navigator.getUserMedia({
       video: true,
       audio: false
-  }, success, failure);
+    }, success, failure);
+  }
 
   // resize viewfinder to a reasonable size, not necessarily photo size
-  var viewfinderWidth = 320;
-  var viewfinderHeight = 240;
   var resized = false;
+
   video.addEventListener('canplay', function() {
     if (! resized) {
-      viewfinderHeight = video.videoHeight / (video.videoWidth / viewfinderWidth);
-      video.setAttribute('width', viewfinderWidth);
-      video.setAttribute('height', viewfinderHeight);
+      video.setAttribute('width', settings.viewFinder.width);
+      video.setAttribute('height', (video.videoHeight / (video.videoWidth / settings.viewFinder.width)));
       resized = true;
     }
   }, false);
-};
+});
 
 // is the current error a permission denied error?
 var permissionDeniedError = function () {
@@ -81,7 +155,8 @@ var permissionDeniedError = function () {
 
 // is the current error a browser not supported error?
 var browserNotSupportedError = function () {
-  return error.get() && error.get() === "BROWSER_NOT_SUPPORTED";
+  return error.get() && error.get() === "BROWSER_NOT_SUPPORTED" ||
+    error.get() === "VIDEO_NOT_SUPPORTED"; // HTML5 feature ok, but no camera available on device
 };
 
 Template.camera.helpers({
@@ -97,25 +172,58 @@ Template.camera.helpers({
 
 Template.camera.events({
   "click .use-photo": function () {
-    closeAndCallback(null, photo.get());
+    MeteorCamera.closeAndCallback(null, photo.get());
   },
   "click .new-photo": function () {
     photo.set(null);
   },
   "click .cancel": function () {
     if (permissionDeniedError()) {
-      closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
+      MeteorCamera.closeAndCallback(new Meteor.Error("permissionDenied", "Camera permissions were denied."));
     } else if (browserNotSupportedError()) {
-      closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
+      MeteorCamera.closeAndCallback(new Meteor.Error("browserNotSupported", "This browser isn't supported."));
     } else if (error.get()) {
-      closeAndCallback(new Meteor.Error("unknownError", "There was an error while accessing the camera."));
+      MeteorCamera.closeAndCallback(new Meteor.Error("unknownError", "There was an error while accessing the camera."));
     } else {
-      closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
+      MeteorCamera.closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
     }
-    
-    if (stream) {
-      stream.stop();
+  },
+  "change #videofallback": function(ev, tpl) {
+    var files = ev.currentTarget.files; // FileList
+    if(!files.length){
+      error.set("Please, click on browse button to select a file.");
+      return;
     }
+
+    var reader  = new FileReader();
+    reader.addEventListener("load", function () {
+      photo.set(reader.result);
+    }, false);
+
+    if (files[0]) {
+      reader.readAsDataURL(files[0]);
+    }
+/*
+    var vendorURL = window.URL || window.webkitURL;
+    var imageUrl = vendorURL.createObjectURL(files[0]);
+    var image = new Image();
+    image.src = imageUrl;
+
+    var canvas = tpl.find("canvas");
+
+    var fileCanvasWidth = canvas.width / image.width;
+    var fileCanvasHeight = canvas.height / image.height;
+    var ratio = Math.min(fileCanvasWidth, fileCanvasHeight);
+
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    canvas.getContext('2d').drawImage(image,
+      0, 0, image.width, image.height,
+      0, 0, image.width*ratio, image.height*ratio);
+    var data = canvas.toDataURL('image/jpeg', settings.quality);
+    photo.set(imageUrl /*data* /);
+ */
+
   }
 });
 
@@ -127,9 +235,9 @@ Template.viewfinder.events({
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
-    var data = canvas.toDataURL('image/jpeg', quality);
+    var data = canvas.toDataURL('image/jpeg', settings.quality);
     photo.set(data);
-    stream.stop();
+    MeteorCamera.stopStream();
   }
 });
 
@@ -176,14 +284,11 @@ MeteorCamera.getPicture = function (options, callback) {
   canvasHeight = Math.round(canvasHeight);
 
   var view;
-  
-  closeAndCallback = function () {
-    var originalArgs = arguments;
-    UI.remove(view);
-    photo.set(null);
-    callback.apply(null, originalArgs);
-  };
-  
+
   view = UI.renderWithData(Template.camera);
   UI.insert(view, document.body);
+  MeteorCamera
+    .setView(view)
+    .setPhoto(photo)
+    .setCallback(callback);
 };
