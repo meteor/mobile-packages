@@ -12,7 +12,7 @@ Cordova.depends({
 Package.on_use(function (api) {
   api.use(["reactive-var"]);
   api.versionsFrom("METEOR@1.2");
-  api.use("isobuild:cordova@5.4.0");
+  api.use("isobuild:cordova@5.2.0");
   api.add_files(["geolocation.js"], "client");
   api.export("Geolocation", "client");
 });
