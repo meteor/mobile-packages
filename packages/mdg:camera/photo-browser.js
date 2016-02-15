@@ -84,6 +84,28 @@ var browserNotSupportedError = function () {
   return error.get() && error.get() === "BROWSER_NOT_SUPPORTED";
 };
 
+var stopStream = function(st) {
+  if(!st) {
+    return;
+  }
+
+  if(st.stop) {
+    st.stop();
+    return;
+  }
+
+  if(st.getTracks) {
+    var tracks = st.getTracks();
+    for(var i = 0; i < tracks.length; i++) {
+      var track = tracks[i];
+      if(track && track.stop) {
+        track.stop();
+      }
+    }
+  }
+};
+
+
 Template.camera.helpers({
   photo: function () {
     return photo.get();
@@ -114,7 +136,7 @@ Template.camera.events({
     }
     
     if (stream) {
-      stream.stop();
+      stopStream(stream);
     }
   }
 });
@@ -129,7 +151,7 @@ Template.viewfinder.events({
     canvas.getContext('2d').drawImage(video, 0, 0, canvasWidth, canvasHeight);
     var data = canvas.toDataURL('image/jpeg', quality);
     photo.set(data);
-    stream.stop();
+    stopStream(stream);
   }
 });
 
