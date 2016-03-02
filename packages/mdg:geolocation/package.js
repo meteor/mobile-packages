@@ -1,12 +1,12 @@
 Package.describe({
   name: "mdg:geolocation",
   summary: "Provides reactive geolocation on desktop and mobile.",
-  version: "1.2.1",
+  version: "1.3.0",
   git: "https://github.com/meteor/mobile-packages"
 });
 
 Cordova.depends({
-  "cordova-plugin-geolocation": "2.0.0"
+  "cordova-plugin-geolocation": "2.1.0"
 });
 
 Package.on_use(function (api) {

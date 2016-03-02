@@ -1,12 +1,12 @@
 Package.describe({
   name: "mdg:camera",
   summary: "Photos with one function call on desktop and mobile.",
-  version: "1.3.1",
+  version: "1.4.0",
   git: "https://github.com/meteor/mobile-packages"
 });
 
 Cordova.depends({
-  "cordova-plugin-camera": "2.0.0"
+  "cordova-plugin-camera": "2.1.0"
 });
 
 Package.onUse(function(api) {
