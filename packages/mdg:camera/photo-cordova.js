@@ -18,7 +18,8 @@ MeteorCamera.getPicture = function (options, callback) {
       quality: options.quality || 49,
       targetWidth: options.width || 640,
       targetHeight: options.height || 480,
-      destinationType: Camera.DestinationType.DATA_URL
+      destinationType: options.destination || Camera.DestinationType.DATA_URL,
+      sourceType: options.source || Camera.PictureSourceType.CAMERA,
     })
   );
 };
