@@ -134,7 +134,7 @@ Template.camera.events({
     } else {
       closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
     }
-    
+
     if (stream) {
       stopStream(stream);
     }
@@ -173,7 +173,7 @@ Template.viewfinder.helpers({
  * 2. data, a Data URI string with the image encoded in JPEG format, ready to
  * use as the `src` attribute on an `<img />` tag.
  */
-MeteorCamera.getPicture = function (options, callback) {
+MeteorCamera.getPictureBrowser = function (options, callback) {
   // if options are not passed
   if (! callback) {
     callback = options;
@@ -198,14 +198,14 @@ MeteorCamera.getPicture = function (options, callback) {
   canvasHeight = Math.round(canvasHeight);
 
   var view;
-  
+
   closeAndCallback = function () {
     var originalArgs = arguments;
     UI.remove(view);
     photo.set(null);
     callback.apply(null, originalArgs);
   };
-  
+
   view = UI.renderWithData(Template.camera);
   UI.insert(view, document.body);
 };
