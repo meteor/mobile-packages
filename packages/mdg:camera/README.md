@@ -24,3 +24,22 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 
 > Warning: In the iOS simulator, the device camera is not accessible so you will get an error that says "source type 1 not available."
 > I'm working on a fallback for iOS that will use the photo library when the camera is not available, but for now just test in your web browser, a physical device, or the Android simulator.
+
+###Runtime Permissions
+When using e.g. camera, microphone or any other native mobile phone features in Cordova, since Android 6 (Marshmallow) it became necessary to request permissions additionally at runtime. In such a case you need to add the cordova diagnostic plugin which manages exactly this. (https://github.com/dpa99c/cordova-diagnostic-plugin)
+
+For example, here we request camera authorization in Android and iOS  
+`meteor add cordova:cordova.plugins.diagnostic@3.0.2`
+
+```js
+if ( Meteor.isCordova ) {
+    cordova.plugins.diagnostic.isCameraAuthorized( function( authorized ){
+     
+        if ( !authorized ) {
+            cordova.plugins.diagnostic.requestCameraAuthorization( function ( granted ) {
+                console.log( "Authorization request for camera use was " + ( granted ? "granted" : "denied" ) );
+            }, function ( error ) { //.. } );
+        }
+    }, function ( error ) { //.. } );
+}
+```
