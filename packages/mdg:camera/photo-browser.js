@@ -10,6 +10,22 @@ var canvasHeight = 0;
 
 var quality = 80;
 
+MeteorCamera.locale = {
+    errorBrowserNotSupported: "Sorry, this browser is currently not supported for camera functionality.",
+    errorAccesingCamera: "There was an error accessing the camera.",
+    usePhoto: "Use Photo",
+    takeNewPhoto: "Take New Photo",
+    waitingPermissions: "Waiting for camera permissions...",
+    takePhoto: "Take Photo",
+    cancel: "Cancel",
+    closePopup: "Close Popup",
+    permissionsDenied: "Camera Permissions Denied",
+    permissionsDeniedExp: "You have denied this app permission to use your camera. If you would like to allow permissions, follow the directions for your browser below.",
+    howToChrome: 'Go to Settings > "Show advanced settings..." > "Content settings..." > Media heading > "Manage exceptions...", then find this website in the list and allow video capture.',
+    howToFirefox: "Reload the page and try again.",
+    howToOpera: 'Go to Preferences > Websites > Media heading > "Manage exceptions...", then find this website in the list and allow video capture.'
+}
+
 Template.viewfinder.rendered = function() {
   var template = this;
 
@@ -113,6 +129,9 @@ Template.camera.helpers({
   error: function () {
     return error.get();
   },
+  translate: function (string) {
+    return MeteorCamera.locale[string];
+  },
   permissionDeniedError: permissionDeniedError,
   browserNotSupportedError: browserNotSupportedError
 });
@@ -134,7 +153,7 @@ Template.camera.events({
     } else {
       closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
     }
-    
+
     if (stream) {
       stopStream(stream);
     }
@@ -158,6 +177,21 @@ Template.viewfinder.events({
 Template.viewfinder.helpers({
   "waitingForPermission": function () {
     return waitingForPermission.get();
+  },
+  translate: function (string) {
+    return MeteorCamera.locale[string];
+  }
+});
+
+Template.genericError.helpers({
+  translate: function (string) {
+    return MeteorCamera.locale[string];
+  }
+});
+
+Template.permissionDenied.helpers({
+  translate: function (string) {
+    return MeteorCamera.locale[string];
   }
 });
 
@@ -198,14 +232,14 @@ MeteorCamera.getPicture = function (options, callback) {
   canvasHeight = Math.round(canvasHeight);
 
   var view;
-  
+
   closeAndCallback = function () {
     var originalArgs = arguments;
     UI.remove(view);
     photo.set(null);
     callback.apply(null, originalArgs);
   };
-  
+
   view = UI.renderWithData(Template.camera);
   UI.insert(view, document.body);
 };
