@@ -25,6 +25,12 @@ The package `mdg:reload-on-resume` delays hot code push on mobile devices until 
 
 [Read the full reload-on-resume documentation here.](https://github.com/meteor/mobile-packages/blob/master/packages/mdg:reload-on-resume/README.md)
 
+### Dialogs
+
+The package `mdg:dialogs` provides methods to display alerts and prompts
+
+[Read the full Dialogs documentation here.](packages/mdg:dialogs/README.md)
+
 ## Example Apps
 
 ### simple-photo
