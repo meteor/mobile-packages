@@ -1,7 +1,7 @@
 Package.describe({
   name: "mdg:camera",
   summary: "Photos with one function call on desktop and mobile.",
-  version: "1.4.1",
+  version: "1.4.2",
   git: "https://github.com/meteor/mobile-packages"
 });
 
