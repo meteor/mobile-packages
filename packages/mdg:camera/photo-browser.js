@@ -27,7 +27,7 @@ Template.viewfinder.rendered = function() {
       var vendorURL = window.URL || window.webkitURL;
       try {
         video.src = vendorURL.createObjectURL(stream);
-      }catch (e) {
+      } catch (e) {
         //workaround based on https://bugzilla.mozilla.org/show_bug.cgi?id=1334564
         video.srcObject = stream;
       }
@@ -139,7 +139,7 @@ Template.camera.events({
     } else {
       closeAndCallback(new Meteor.Error("cancel", "Photo taking was cancelled."));
     }
-    
+
     if (stream) {
       stopStream(stream);
     }
@@ -203,14 +203,14 @@ MeteorCamera.getPicture = function (options, callback) {
   canvasHeight = Math.round(canvasHeight);
 
   var view;
-  
+
   closeAndCallback = function () {
     var originalArgs = arguments;
     UI.remove(view);
     photo.set(null);
     callback.apply(null, originalArgs);
   };
-  
+
   view = UI.renderWithData(Template.camera);
   UI.insert(view, document.body);
 };
