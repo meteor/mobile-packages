@@ -9,9 +9,9 @@
         {{> permissionDenied}}
       {{else}}
         {{#if browserNotSupportedError}}
-          {{> genericError message="Sorry, this browser is currently not supported for camera functionality."}}
+          {{> genericError message="errorBrowserNotSupported"}}
         {{else}}
-          {{> genericError message="There was an error accessing the camera."}}
+          {{> genericError message="errorAccesingCamera"}}
         {{/if}}
       {{/if}}
     {{else}}
@@ -19,8 +19,8 @@
         <div class="center">
           <img src="{{photo}}" class="photo-preview" />
           <div>
-            <button class="button use-photo">Use Photo</button>
-            <button class="button new-photo">Take New Photo</button>
+            <button class="button use-photo">{{translate "usePhoto"}}</button>
+            <button class="button new-photo">{{translate "takeNewPhoto"}}</button>
           </div>
         </div>
       {{else}}
@@ -34,14 +34,14 @@
   <div class="viewfinder">
     <video id="video" class="{{#if waitingForPermission}}hidden{{/if}}">
       </video>
-    
+
     <div>
       {{#if waitingForPermission}}
-        <p>Waiting for camera permissions...</p>
+        <p>{{translate "waitingPermissions"}}</p>
       {{else}}
-        <button class="button shutter">Take Photo</button>
+        <button class="button shutter">{{translate "takePhoto"}}</button>
       {{/if}}
-      <button class="button cancel">Cancel</button>
+      <button class="button cancel">{{translate "cancel"}}</button>
     </div>
   </div>
 
@@ -50,34 +50,28 @@
 
 <template name="genericError">
   <div class="generic-error">
-    <p>{{message}}</p>
-    <button class="button cancel">Close Popup</button>
+    <p>{{translate message}}</p>
+    <button class="button cancel">{{translate "closePopup"}}</button>
   </div>
 </template>
 
 <template name="permissionDenied">
   <div class="permission-denied-error">
-    <h2>Camera Permissions Denied</h2>
+    <h2>{{translate "permissionsDenied"}}</h2>
 
     <p>
-      You have denied this app permission to use your camera.
-      If you would like to allow permissions, follow the directions for your
-      browser below.
+      {{translate "permissionsDeniedExp"}}
     </p>
 
     <dl class="permissions-howto">
       <dt>Google Chrome</dt>
-        <dd>Go to Settings > "Show advanced settings..." >
-          "Content settings..." > Media heading > "Manage exceptions...",
-          then find this website in the list and allow video capture.</dd>
+        <dd>{{translate "howToChrome"}}</dd>
       <dt>Mozilla Firefox</dt>
-        <dd>Reload the page and try again.</dd>
+        <dd>{{translate "howToFirefox"}}</dd>
       <dt>Opera</dt>
-        <dd>Go to Preferences > Websites > Media heading >
-          "Manage exceptions...", then find this website in the list and
-          allow video capture.</dd>
+        <dd>{{translate "howToOpera"}}</dd>
     </dl>
 
-    <button class="button cancel">Close Popup</button>
+    <button class="button cancel">{{translate "closePopup"}}</button>
   </div>
 </template>
