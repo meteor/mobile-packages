@@ -36,19 +36,17 @@ Template.viewfinder.rendered = function() {
   // stream webcam video to the <video> element
   var success = function(newStream) {
     stream = newStream;
-
-    if (navigator.mozGetUserMedia) {
-      video.mozSrcObject = stream;
-    } else {
-      var vendorURL = window.URL || window.webkitURL;
-      try {
-        video.src = vendorURL.createObjectURL(stream);
-      } catch (e) {
-        //workaround based on https://bugzilla.mozilla.org/show_bug.cgi?id=1334564
+      
+    // Older browsers may not have srcObject
+    if ("srcObject" in video) {
         video.srcObject = stream;
-      }
+    } else {
+        // Avoid using this in new browsers, as it is going away.
+        video.src = window.URL.createObjectURL(stream);
     }
-    video.play();
+    video.onloadedmetadata = function(e) {
+        video.play();
+     };
 
     waitingForPermission.set(false);
   };
@@ -58,25 +56,17 @@ Template.viewfinder.rendered = function() {
     error.set(err);
   };
 
-  // tons of different browser prefixes
-  navigator.getUserMedia = (
-    navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia
-  );
-
-  if (! navigator.getUserMedia) {
+  if (!navigator.mediaDevices.getUserMedia) {
     // no browser support, sorry
     failure("BROWSER_NOT_SUPPORTED");
     return;
   }
 
-  // initiate request for webcam
-  navigator.getUserMedia({
+ // initiate request for webcam
+  navigator.mediaDevices.getUserMedia({
       video: true,
       audio: false
-  }, success, failure);
+  }).then(success).catch(failure)
 
   // resize viewfinder to a reasonable size, not necessarily photo size
   var viewfinderWidth = 320;
