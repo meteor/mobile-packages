@@ -41,12 +41,28 @@ Template.viewfinder.rendered = function() {
     if ("srcObject" in video) {
         video.srcObject = stream;
     } else {
-        // Avoid using this in new browsers, as it is going away.
-        video.src = window.URL.createObjectURL(stream);
+      // begin of legacy api
+      if (navigator.mozGetUserMedia) {
+        video.mozSrcObject = stream;
+      } else {
+        var vendorURL = window.URL || window.webkitURL;
+        try {
+          video.src = vendorURL.createObjectURL(stream);
+        } catch (e) {
+          //workaround based on https://bugzilla.mozilla.org/show_bug.cgi?id=1334564
+          video.srcObject = stream;
+        }
+      }
+      // end of legacy api
     }
-    video.onloadedmetadata = function(e) {
+      
+    if ("onloadedmetadata" in video) {
+      video.onloadedmetadata = function (e) {
         video.play();
-     };
+      };
+    } else {
+      video.play();
+    }
 
     waitingForPermission.set(false);
   };
@@ -56,17 +72,37 @@ Template.viewfinder.rendered = function() {
     error.set(err);
   };
 
-  if (!navigator.mediaDevices.getUserMedia) {
-    // no browser support, sorry
-    failure("BROWSER_NOT_SUPPORTED");
-    return;
-  }
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // initiate request for webcam
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'environment',
+      },
+      audio: false,
+    }).then(success).catch(failure)
+  } else {
+    // begin of legacy api
+    // tons of different browser prefixes
+    navigator.getUserMedia = (
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia
+    );
 
- // initiate request for webcam
-  navigator.mediaDevices.getUserMedia({
+    if (!navigator.getUserMedia) {
+      // no browser support, sorry
+      failure("BROWSER_NOT_SUPPORTED");
+      return;
+    }
+
+    // initiate request for webcam
+    navigator.getUserMedia({
       video: true,
       audio: false
-  }).then(success).catch(failure)
+    }, success, failure);
+    // end of legacy api
+  }
 
   // resize viewfinder to a reasonable size, not necessarily photo size
   var viewfinderWidth = 320;
