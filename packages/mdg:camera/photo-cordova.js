@@ -13,8 +13,8 @@ MeteorCamera.getPicture = function (options, callback) {
     callback(new Meteor.Error("cordovaError", error));
   };
 
-  navigator.camera.getPicture(success, failure, 
-    _.extend(options, {
+  navigator.camera.getPicture(success, failure,
+    Object.assign(options, {
       quality: options.quality || 49,
       targetWidth: options.width || 640,
       targetHeight: options.height || 480,
