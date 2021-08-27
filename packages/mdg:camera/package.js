@@ -1,18 +1,19 @@
 Package.describe({
   name: "mdg:camera",
   summary: "Photos with one function call on desktop and mobile.",
-  version: "1.1.5",
+  version: "1.5.1",
   git: "https://github.com/meteor/mobile-packages"
 });
 
 Cordova.depends({
-  "org.apache.cordova.camera":"0.3.2"
+  "cordova-plugin-camera": "2.4.1"
 });
 
 Package.onUse(function(api) {
   api.export('MeteorCamera');
   api.use(["templating", "session", "ui", "blaze", "less@1.0.0||2.0.0", "reactive-var"]);
-  api.versionsFrom("METEOR@0.9.2");
+  api.versionsFrom("METEOR@1.2");
+  api.use("isobuild:cordova@5.2.0");
 
   api.addFiles('photo.html');
   api.addFiles('photo.js');

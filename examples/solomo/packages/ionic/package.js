@@ -5,8 +5,8 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.addFiles('css/ionic.css', 'client');
-  api.addFiles('fonts/ionicons.eot', 'client');
-  api.addFiles('fonts/ionicons.svg', 'client');
-  api.addFiles('fonts/ionicons.ttf', 'client');
-  api.addFiles('fonts/ionicons.woff', 'client');
+  api.addAssets('fonts/ionicons.eot', 'client');
+  api.addAssets('fonts/ionicons.svg', 'client');
+  api.addAssets('fonts/ionicons.ttf', 'client');
+  api.addAssets('fonts/ionicons.woff', 'client');
 });
