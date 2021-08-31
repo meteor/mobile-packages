@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.5.2, 2021-08-31
+
+* Updated getting user media to be able to use modern way, while maintaining backward compatibility, [PR](https://github.com/meteor/mobile-packages/pull/147).
+
 ## v1.5.1, 2021-08-25
 
 * Removed underscore function in photo-cordova.js
