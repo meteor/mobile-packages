@@ -20,7 +20,7 @@ htmljs@1.0.5
 inter-process-messaging@0.1.1
 jquery@1.11.4
 less@2.5.1
-mdg:camera@1.5.1
+mdg:camera@1.5.2
 meteor@1.9.3
 minifiers@1.1.7
 modern-browsers@0.1.5
