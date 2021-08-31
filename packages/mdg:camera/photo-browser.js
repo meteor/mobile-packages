@@ -36,19 +36,33 @@ Template.viewfinder.rendered = function() {
   // stream webcam video to the <video> element
   var success = function(newStream) {
     stream = newStream;
-
-    if (navigator.mozGetUserMedia) {
-      video.mozSrcObject = stream;
-    } else {
-      var vendorURL = window.URL || window.webkitURL;
-      try {
-        video.src = vendorURL.createObjectURL(stream);
-      } catch (e) {
-        //workaround based on https://bugzilla.mozilla.org/show_bug.cgi?id=1334564
+      
+    // Older browsers may not have srcObject
+    if ("srcObject" in video) {
         video.srcObject = stream;
+    } else {
+      // begin of legacy api
+      if (navigator.mozGetUserMedia) {
+        video.mozSrcObject = stream;
+      } else {
+        var vendorURL = window.URL || window.webkitURL;
+        try {
+          video.src = vendorURL.createObjectURL(stream);
+        } catch (e) {
+          //workaround based on https://bugzilla.mozilla.org/show_bug.cgi?id=1334564
+          video.srcObject = stream;
+        }
       }
+      // end of legacy api
     }
-    video.play();
+      
+    if ("onloadedmetadata" in video) {
+      video.onloadedmetadata = function (e) {
+        video.play();
+      };
+    } else {
+      video.play();
+    }
 
     waitingForPermission.set(false);
   };
@@ -58,25 +72,37 @@ Template.viewfinder.rendered = function() {
     error.set(err);
   };
 
-  // tons of different browser prefixes
-  navigator.getUserMedia = (
-    navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia
-  );
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // initiate request for webcam
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: 'environment',
+      },
+      audio: false,
+    }).then(success).catch(failure)
+  } else {
+    // begin of legacy api
+    // tons of different browser prefixes
+    navigator.getUserMedia = (
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia
+    );
 
-  if (! navigator.getUserMedia) {
-    // no browser support, sorry
-    failure("BROWSER_NOT_SUPPORTED");
-    return;
-  }
+    if (!navigator.getUserMedia) {
+      // no browser support, sorry
+      failure("BROWSER_NOT_SUPPORTED");
+      return;
+    }
 
-  // initiate request for webcam
-  navigator.getUserMedia({
+    // initiate request for webcam
+    navigator.getUserMedia({
       video: true,
       audio: false
-  }, success, failure);
+    }, success, failure);
+    // end of legacy api
+  }
 
   // resize viewfinder to a reasonable size, not necessarily photo size
   var viewfinderWidth = 320;
