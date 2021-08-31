@@ -12,7 +12,7 @@ Cordova.depends({
 Package.onUse(function(api) {
   api.export('MeteorCamera');
   api.use(["templating", "session", "ui", "blaze", "less@1.0.0||2.0.0", "reactive-var"]);
-  api.versionsFrom("METEOR@1.3");
+  api.versionsFrom("METEOR@1.2");
   api.use("isobuild:cordova@5.2.0");
 
   api.addFiles('photo.html');
