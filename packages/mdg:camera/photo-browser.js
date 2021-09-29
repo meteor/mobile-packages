@@ -36,7 +36,7 @@ Template.viewfinder.rendered = function() {
   // stream webcam video to the <video> element
   var success = function(newStream) {
     stream = newStream;
-      
+
     // Older browsers may not have srcObject
     if ("srcObject" in video) {
         video.srcObject = stream;
@@ -55,7 +55,7 @@ Template.viewfinder.rendered = function() {
       }
       // end of legacy api
     }
-      
+
     if ("onloadedmetadata" in video) {
       video.onloadedmetadata = function (e) {
         video.play();
@@ -266,11 +266,11 @@ MeteorCamera.getPicture = function (options, callback) {
 
   closeAndCallback = function () {
     var originalArgs = arguments;
-    UI.remove(view);
+    Blaze.remove(view);
     photo.set(null);
     callback.apply(null, originalArgs);
   };
 
-  view = UI.renderWithData(Template.camera);
-  UI.insert(view, document.body);
+  view = Blaze.renderWithData(Template.camera, null, document.body);
+  // Blaze.render(view, document.body);
 };
