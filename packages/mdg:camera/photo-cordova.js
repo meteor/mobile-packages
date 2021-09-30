@@ -6,7 +6,11 @@ MeteorCamera.getPicture = function (options, callback) {
   }
 
   var success = function (data) {
-    callback(null, "data:image/jpeg;base64," + data);
+    if (options.destinationType === 'URI') {
+      callback(null, data);
+    } else {
+      callback(null, "data:image/jpeg;base64," + data);
+    }
   };
 
   var failure = function (error) {
@@ -18,7 +22,7 @@ MeteorCamera.getPicture = function (options, callback) {
       quality: options.quality || 49,
       targetWidth: options.width || 640,
       targetHeight: options.height || 480,
-      destinationType: Camera.DestinationType.DATA_URL
+      destinationType: options.destinationType === 'URI' ? Camera.DestinationType.FILE_URI : Camera.DestinationType.DATA_URL
     })
   );
 };
