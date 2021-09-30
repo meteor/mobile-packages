@@ -4,15 +4,18 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
-insecure
+autopublish@1.0.7
+insecure@1.0.7
 mrt:moment
 iron:router
 ionic
-accounts-ui
-accounts-facebook
+accounts-ui@1.4.0
+accounts-facebook@1.3.3
 google-maps
 mdg:reload-on-resume
 mdg:geolocation
-mdg:camera
-standard-minifiers
+standard-minifier-css
+standard-minifier-js
+shell-server
+facebook-config-ui
+dynamic-import

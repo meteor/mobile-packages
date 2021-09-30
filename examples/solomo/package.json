@@ -1,0 +1,22 @@
+{
+  "name": "solomo",
+  "version": "1.0.0",
+  "description": "Devshop Demo for Meteor Mobile: SoLoMo ======================================",
+  "main": "devshop-demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meteor/mobile-packages.git"
+  },
+  "author": "Meteor Software",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meteor/mobile-packages/issues"
+  },
+  "homepage": "https://github.com/meteor/mobile-packages#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.15.4"
+  }
+}
