@@ -15,6 +15,7 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `width` An integer that specifies the minimum width of the returned photo.
 - `height` An integer that specifies the minimum height of the returned photo.
 - `quality` A number from 0 to 100 specifying the desired quality of JPEG encoding.
+- `correctOrientation` A boolean to enable/disable orienting the picture based on how the device has been held.
 
 #### callback(error, data)
 
@@ -24,7 +25,7 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `data` A base64-encoded data URI for the image taken by the camera. This parameter can be used directly in the 'src' attribute of an image tag.
 
 
-> Warning: In the iOS simulator, the device camera is not accessible so you will get an error that says "source type 1 not available."
+> Warning: In the iOS simulator, the device camera is not accessible, so you will get an error that says "source type 1 not available."
 > I'm working on a fallback for iOS that will use the photo library when the camera is not available, but for now just test in your web browser, a physical device, or the Android simulator.
 
 ### Localize
