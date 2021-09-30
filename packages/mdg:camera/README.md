@@ -15,7 +15,8 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `width` An integer that specifies the minimum width of the returned photo.
 - `height` An integer that specifies the minimum height of the returned photo.
 - `quality` A number from 0 to 100 specifying the desired quality of JPEG encoding.
-- `correctOrientation` A boolean to enable/disable orienting the picture based on how the device has been held.
+
+You can use other options from [Cordova Camera Options](https://cordova.apache.org/docs/en/10.x/reference/cordova-plugin-camera/#module_Camera) as they get passed on, with the exception of `destinationType`.
 
 #### callback(error, data)
 
