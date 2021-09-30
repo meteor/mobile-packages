@@ -48,3 +48,15 @@ MeteorCamera.locale.howToOpera = 'Go to Preferences > Websites > Media heading >
 ```
 
 with corresponding translations in your language.
+
+### Runtime permissions
+
+When using camera or any other native mobile phone features in Cordova it is necessary to request permissions at a runtime. In such a case you need to add the cordova diagnostic plugin which manages that.
+
+You can add it with 
+
+```bash
+meteor add cordova:cordova.plugins.diagnostic@6.0.3
+```
+
+See [their documentations](https://github.com/dpa99c/cordova-diagnostic-plugin#readme) for more details.
