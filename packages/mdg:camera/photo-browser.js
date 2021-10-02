@@ -272,5 +272,4 @@ MeteorCamera.getPicture = function (options, callback) {
   };
 
   view = Blaze.renderWithData(Template.camera, null, document.body);
-  // Blaze.render(view, document.body);
 };
