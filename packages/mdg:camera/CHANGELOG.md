@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.6.0, 2021-09-02
+
+* Updated versions from and less version, fix issue #123
+
 ## v1.5.2, 2021-08-31
 
 * Updated getting user media to be able to use modern way, while maintaining backward compatibility, [PR](https://github.com/meteor/mobile-packages/pull/147).
