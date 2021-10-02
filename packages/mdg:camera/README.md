@@ -16,6 +16,8 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `height` An integer that specifies the minimum height of the returned photo.
 - `quality` A number from 0 to 100 specifying the desired quality of JPEG encoding.
 
+You can use other options from [Cordova Camera Options](https://cordova.apache.org/docs/en/10.x/reference/cordova-plugin-camera/#module_Camera) as they get passed on, with the exception of `destinationType`.
+
 #### callback(error, data)
 
 `callback` is a required argument that is a function that takes two arguments:
@@ -24,7 +26,7 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `data` A base64-encoded data URI for the image taken by the camera. This parameter can be used directly in the 'src' attribute of an image tag.
 
 
-> Warning: In the iOS simulator, the device camera is not accessible so you will get an error that says "source type 1 not available."
+> Warning: In the iOS simulator, the device camera is not accessible, so you will get an error that says "source type 1 not available."
 > I'm working on a fallback for iOS that will use the photo library when the camera is not available, but for now just test in your web browser, a physical device, or the Android simulator.
 
 ### Localize
@@ -48,3 +50,15 @@ MeteorCamera.locale.howToOpera = 'Go to Preferences > Websites > Media heading >
 ```
 
 with corresponding translations in your language.
+
+### Runtime permissions
+
+When using camera or any other native mobile phone features in Cordova it is necessary to request permissions at a runtime. In such a case you need to add the cordova diagnostic plugin which manages that.
+
+You can add it with 
+
+```bash
+meteor add cordova:cordova.plugins.diagnostic@6.0.3
+```
+
+See [their documentations](https://github.com/dpa99c/cordova-diagnostic-plugin#readme) for more details.
