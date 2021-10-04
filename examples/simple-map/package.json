@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/runtime": "^7.15.3"
+    "@babel/runtime": "^7.15.4",
+    "jquery": "^3.6.0"
   }
 }
