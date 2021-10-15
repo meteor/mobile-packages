@@ -15,8 +15,9 @@ Prompt the user to take a photo with their device and get the picture as a Data 
 - `width` An integer that specifies the minimum width of the returned photo.
 - `height` An integer that specifies the minimum height of the returned photo.
 - `quality` A number from 0 to 100 specifying the desired quality of JPEG encoding.
+- `destinationType` For Cordova ONLY. Pass in `URI` to get back file uri instead of base64 image (the default). If you want to display the photo taken see [Local Files section](https://guide.meteor.com/cordova.html#accessing-local-files) in the Guide and use the `WebAppLocalServer.localFileSystemUrl()` function for convert the `file://` url. 
 
-You can use other options from [Cordova Camera Options](https://cordova.apache.org/docs/en/10.x/reference/cordova-plugin-camera/#module_Camera) as they get passed on, with the exception of `destinationType`.
+You can use other options from [Cordova Camera Options](https://cordova.apache.org/docs/en/10.x/reference/cordova-plugin-camera/#module_Camera) on Cordova as they get passed on.
 
 #### callback(error, data)
 
