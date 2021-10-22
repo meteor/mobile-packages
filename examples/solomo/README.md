@@ -7,11 +7,11 @@ Devshop Demo for Meteor Mobile: SoLoMo
 
 The developers at [Meteor](https://www.meteor.com/) have been hard at work building mobile support into the framework. Our goal is to make Meteor the easiest, fastest, and best way to build a great cross-platform application. This is an app we showed at Meteor Devshop August 2014 to demonstrate some of the features of the initial preview release of mobile support for Meteor.
 
-To learn more about making Meteor mobile apps with Cordova, check out [this Hackpad](https://meteor.hackpad.com/Getting-Started-With-Cordova-Z5n6zkVB1xq)!
-
 ## Running the App
 
-First install the [Meteor Web Framework](https://www.meteor.com/), then pick a platform and run the appropriate commands!
+First install the [Meteor Web Framework](https://www.meteor.com/), `npm install -g meteor`, then pick a platform and run the appropriate commands!
+
+For more information to about Cordova integration [check out Meteor guide article](https://guide.meteor.com/cordova.html).
 
 ### Web Browser
 
