@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.8.0, 2021-10-25
+
+* Updated `cordova-plugin-camera` to v6 for Meteor 2.5.
+
 ## v1.7.0, 2021-10-15
 
 * Add option for Cordova to select `destinationType` on Cordova to allow to switch to `FILE_URI` instead of the default `DATA_URL`. Note, that you will need access to the device file system in order to display the images. 

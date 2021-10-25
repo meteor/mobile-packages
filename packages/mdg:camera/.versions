@@ -18,7 +18,7 @@ html-tools@1.1.0
 htmljs@1.1.0
 inter-process-messaging@0.1.1
 less@4.0.0
-mdg:camera@1.6.1
+mdg:camera@1.8.0
 meteor@1.10.0
 modern-browsers@0.1.5
 modules@0.17.0
