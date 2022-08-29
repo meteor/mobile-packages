@@ -1,15 +1,15 @@
 {
   "name": "simple-map",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
   "main": "map.js",
   "scripts": {
+    "start": "meteor run",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
-    "jquery": "^3.6.0"
+    "@babel/runtime": "^7.18.9",
+    "jquery": "^3.6.1",
+    "meteor-node-stubs": "^1.2.5"
   }
 }
