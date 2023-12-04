@@ -1,9 +1,20 @@
-var Photos = new Meteor.Collection("photos");
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
+import { MeteorCamera } from 'meteor/mdg:camera';
+import { Router } from 'meteor/iron:router';
+import { Reload } from 'meteor/reload';
+import { Geolocation } from 'meteor/mdg:geolocation';
+import { Tracker } from 'meteor/tracker';
+import { ReactiveVar } from "meteor/reactive-var";
+import { Template } from "meteor/templating";
+import { Mongo } from "meteor/mongo";
+
+const Photos = new Mongo.Collection("photos");
 
 if (Meteor.isClient) {
-  var selectedMarkerId = new Blaze.ReactiveVar(null);
+  const selectedMarkerId = new ReactiveVar(null);
 
-  Deps.autorun(function () {
+  Tracker.autorun(function () {
     selectedMarkerId.set(Session.get("currentPhoto"));
   });
 
@@ -18,8 +29,8 @@ if (Meteor.isClient) {
     selectedMarkerId: selectedMarkerId
   });
 
-  var onSuccess = function (imageData) {
-    var latLng = Geolocation.latLng();
+  const onSuccess = function (imageData) {
+    const latLng = Geolocation.latLng();
 
     if (! latLng) {
       return;
