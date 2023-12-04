@@ -1,5 +1,9 @@
-var GoogleMap = function (element) {
-  var self = this;
+import { Template } from 'meteor/templating';
+import { Geolocation } from 'meteor/mdg:geolocation';
+import { Tracker } from 'meteor/tracker';
+
+const GoogleMap = function (element) {
+  const self = this;
 
   self.element = element;
   self.markers = {};
@@ -12,8 +16,8 @@ var GoogleMap = function (element) {
     }
   });
 
-  var lat = 0, lng = 0;
-  var mapOptions = {
+  let lat = 0, lng = 0;
+  const mapOptions = {
     center: new google.maps.LatLng(lat, lng),
     zoom: 17
   };
@@ -22,27 +26,27 @@ var GoogleMap = function (element) {
 
 // accepts reactive function that returns {lat: Number, lng: Number}
 GoogleMap.prototype.setCenter = function (centerFunc) {
-  var self = this;
+  const self = this;
 
   if (self.centerComputation) {
     self.centerComputation.stop();
   }
 
-  self.centerComputation = Deps.autorun(function () {
-    var center = centerFunc();
+  self.centerComputation = Tracker.autorun(function () {
+    const center = centerFunc();
 
     if (self.selectedMarkerId && self.selectedMarkerId.get()) {
       // marker is currently selected, don't update the center until it's closed
-      var markerId = self.selectedMarkerId.get();
+      const markerId = self.selectedMarkerId.get();
       if (self.markers[markerId]) {
-        var marker = self.markers[markerId];
+        const marker = self.markers[markerId];
         self.gmap.setCenter(marker.getPosition());
       }
       return;
     }
 
     if (center) {
-      var latLng = new google.maps.LatLng(center.lat, center.lng);
+      const latLng = new google.maps.LatLng(center.lat, center.lng);
       self.gmap.setCenter(latLng);
     }
   });
@@ -51,7 +55,7 @@ GoogleMap.prototype.setCenter = function (centerFunc) {
 // accepts minimongo cursor
 // documents must have field marker: {lat: Number, lng: Number, infoWindowContent: String}
 GoogleMap.prototype.setMarkers = function (cursor) {
-  var self = this;
+  const self = this;
 
   if (self.liveQuery) {
     self.liveQuery.stop();
@@ -59,13 +63,13 @@ GoogleMap.prototype.setMarkers = function (cursor) {
 
   self.liveQuery = cursor.observe({
     added: function (doc) {
-      var marker = new google.maps.Marker({
+      const marker = new google.maps.Marker({
         position: new google.maps.LatLng(doc.marker.lat, doc.marker.lng),
         map: self.gmap
       });
 
       self.markers[doc._id] = marker;
-      
+
       if (doc.marker.infoWindowContent) {
         marker.infoWindowContent = doc.marker.infoWindowContent;
 
@@ -91,16 +95,16 @@ GoogleMap.prototype.setMarkers = function (cursor) {
 };
 
 GoogleMap.prototype.showCurrLocationMarker = function () {
-  var self = this;
+  const self = this;
 
-  var marker = new google.maps.Marker({
+  const marker = new google.maps.Marker({
     position: new google.maps.LatLng(0, 0),
     map: self.gmap,
     icon: new google.maps.MarkerImage(icon, null, null, null,
       new google.maps.Size(20, 20))
   });
 
-  Deps.autorun(function () {
+  Tracker.autorun(function () {
     var latLng = Geolocation.latLng();
 
     if (latLng) {
@@ -112,7 +116,7 @@ GoogleMap.prototype.showCurrLocationMarker = function () {
 
 // accepts reactive var
 GoogleMap.prototype.bindToSelectedMarkerId = function (selectedMarkerId) {
-  var self = this;
+  const self = this;
 
   self.selectedMarkerId = selectedMarkerId;
 
@@ -120,8 +124,8 @@ GoogleMap.prototype.bindToSelectedMarkerId = function (selectedMarkerId) {
     self.selectedMarkerIdComputation.stop();
   }
 
-  self.selectedMarkerIdComputation = Deps.autorun(function () {
-    var markerId = self.selectedMarkerId.get();
+  self.selectedMarkerIdComputation = Tracker.autorun(function () {
+    const markerId = self.selectedMarkerId.get();
 
     if (markerId) {
       self.syncWithSelectedMarkerId(markerId);
@@ -130,7 +134,7 @@ GoogleMap.prototype.bindToSelectedMarkerId = function (selectedMarkerId) {
 };
 
 GoogleMap.prototype.selectMarker = function (markerId) {
-  var self = this;
+  const self = this;
 
   if (self.selectedMarkerId) {
     self.selectedMarkerId.set(markerId);
@@ -138,9 +142,9 @@ GoogleMap.prototype.selectMarker = function (markerId) {
 };
 
 GoogleMap.prototype.syncWithSelectedMarkerId = function (markerId) {
-  var self = this;
+  const self = this;
 
-  var marker = self.markers[markerId];
+  const marker = self.markers[markerId];
   if (marker) {
     self.infowindow.setContent(marker.infoWindowContent);
     self.infowindow.open(self.gmap, marker);

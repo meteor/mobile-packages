@@ -1,3 +1,8 @@
+import { Meteor } from 'meteor/meteor';
+import { Session } from 'meteor/session';
+import { WebAppLocalServer } from 'meteor/webapp';
+import { MeteorCamera } from 'meteor/mdg:camera';
+
 if (Meteor.isClient) {
   Template.body.helpers({
     photo: function () {
@@ -7,9 +12,9 @@ if (Meteor.isClient) {
 
   Template.body.events({
     'click button': function () {
-      var cameraOptions = {
+      const cameraOptions = {
         width: 800,
-        height: 600
+        height: 800
       };
       if (Meteor.isCordova) {
         cameraOptions.destinationType = 'URI'
