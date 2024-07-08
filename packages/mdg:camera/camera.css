@@ -1,7 +1,9 @@
-@camera-buttons-color: #596595;
-@camera-buttons-color-border: darken(@camera-buttons-color, 10%);
-@camera-buttons-color-active: lighten(@camera-buttons-color, 10%);
-@camera-buttons-color-active-border: darken(@camera-buttons-color-active, 10%);
+:root {
+  --camera-buttons-color: #596595;
+  --camera-buttons-color-border: color-mix(in srgb, var(--camera-buttons-color) 10%, black);
+  --camera-buttons-color-active: color-mix(in srgb, var(--camera-buttons-color) 10%, white);
+  --camera-buttons-color-active-border: color-mix(in srgb, var(--camera-buttons-color-active) 10%, black);
+}
 
 .camera-popup {
   position: fixed;
@@ -56,8 +58,8 @@
   .permission-denied-error {
     h2 {
       margin-top: 0;
-      color: @camera-buttons-color;
-      border-bottom: 1px solid @camera-buttons-color;
+      color: var(--camera-buttons-color);
+      border-bottom: 1px solid var(--camera-buttons-color);
       padding-bottom: 10px;
       line-height: 1.3em;
     }
@@ -77,12 +79,12 @@
     padding: 6px 8px;
     border-radius: 5px;
 
-    background-color: @camera-buttons-color;
-    border: 1px solid @camera-buttons-color-border;
+    background-color: var(--camera-buttons-color);
+    border: 1px solid var(--camera-buttons-color-border);
 
     &:active {
-      background-color: @camera-buttons-color-active;
-      border: 1px solid @camera-buttons-color-active-border;
+      background-color: var(--camera-buttons-color-active);
+      border: 1px solid var(--camera-buttons-color-active-border);
     }
   }
 }
