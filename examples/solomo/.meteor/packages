@@ -20,10 +20,10 @@ facebook-config-ui@1.0.3
 dynamic-import@0.7.3
 mdg:camera
 jquery@3.0.0
-ecmascript
-webapp
-session
-reactive-var
-meteor-base
-mongo
+ecmascript@0.16.8
+webapp@1.13.8
+session@1.2.1
+reactive-var@1.0.12
+meteor-base@1.5.1
+mongo@1.16.10
 blaze-html-templates
