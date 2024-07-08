@@ -86,6 +86,10 @@
       background-color: var(--camera-buttons-color-active);
       border: 1px solid var(--camera-buttons-color-active-border);
     }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
