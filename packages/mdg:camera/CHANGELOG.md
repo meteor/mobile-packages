@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.9.0, 2025-05-19
+
+* Update package to be compatible with Meteor 3.
+
 ## v1.8.0, 2021-10-25
 
 * Updated `cordova-plugin-camera` to v6 for Meteor 2.5.
