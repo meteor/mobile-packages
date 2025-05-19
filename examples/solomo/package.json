@@ -1,9 +1,10 @@
 {
   "name": "solomo",
   "version": "1.0.0",
-  "description": "Devshop Demo for Meteor Mobile: SoLoMo ======================================",
+  "description": "Devshop Demo for Meteor Mobile: SoLoMo",
   "main": "devshop-demo.js",
   "scripts": {
+    "start": "meteor run --settings settings.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +18,8 @@
   },
   "homepage": "https://github.com/meteor/mobile-packages#readme",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
-    "meteor-node-stubs": "^1.1.0"
+    "@babel/runtime": "^7.27.1",
+    "jquery": "^3.7.1",
+    "meteor-node-stubs": "^1.2.17"
   }
 }

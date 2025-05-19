@@ -1,7 +1,7 @@
 <head>
   <title>devshop-demo</title>
   <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2V8IFYwB-Syx2-lauWq8EgjNmS7b8fMY">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2V8IFYwB-Syx2-lauWq8EgjNmS7b8fMY&loading=async&libraries=marker">
   </script>
   <meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
@@ -16,13 +16,15 @@
 </template>
 
 <template name="list">
-  {{#each photos}}
-    <div class="card">
-      <a href="/map/{{_id}}" class="item item-image">
-        <img src="{{image}}" />
-      </a>
-    </div>
-  {{/each}}
+  <div id="photo-list">
+    {{#each photos}}
+      <div class="card">
+        <a href="/map/{{_id}}" class="item item-image">
+          <img src="{{image}}" />
+        </a>
+      </div>
+    {{/each}}
+  </div>
 </template>
 
 <template name="camera-page">
