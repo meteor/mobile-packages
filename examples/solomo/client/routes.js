@@ -1,8 +1,12 @@
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { Session } from 'meteor/session'
+import { Session } from 'meteor/session';
+import '../devshop-demo';
 
 FlowRouter.route('/', {
-  name: 'index',
+  name: 'map',
+  waitOn: function () {
+    return [Meteor.subscribe('photos')];
+  },
   action: function () {
     this.render('layout', 'map')
   },
@@ -12,6 +16,9 @@ FlowRouter.route('/', {
 })
 FlowRouter.route('/map/:_id', {
   name: 'mapWithPhoto',
+  waitOn: function () {
+    return [Meteor.subscribe('photos')];
+  },
   action: function () {
     this.render('layout', 'map')
   },
@@ -21,12 +28,18 @@ FlowRouter.route('/map/:_id', {
 })
 FlowRouter.route('/camera-page', {
   name: 'camera-page',
+  waitOn: function () {
+    return [Meteor.subscribe('photos')];
+  },
   action: function () {
     this.render('layout', 'camera-page')
   }
 })
 FlowRouter.route('/list', {
   name: 'list',
+  waitOn: function () {
+    return [Meteor.subscribe('photos')];
+  },
   action: function () {
     this.render('layout', 'list')
   }

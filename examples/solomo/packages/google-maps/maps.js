@@ -19,7 +19,8 @@ const GoogleMap = function (element) {
   let lat = 0, lng = 0;
   const mapOptions = {
     center: new google.maps.LatLng(lat, lng),
-    zoom: 17
+    zoom: 17,
+    mapId: "DEMO_MAP_ID", // Map ID is required for advanced markers.
   };
   self.gmap = new google.maps.Map(element, mapOptions);
 };
@@ -65,7 +66,7 @@ GoogleMap.prototype.setMarkers = function (cursor) {
     added: function (doc) {
       const marker = new google.maps.Marker({
         position: new google.maps.LatLng(doc.marker.lat, doc.marker.lng),
-        map: self.gmap
+        map: self.gmap,
       });
 
       self.markers[doc._id] = marker;

@@ -48,3 +48,12 @@ html, body {
   position: absolute;
   z-index: 1000000;
 }
+
+#photo-list {
+  display: flex;
+  gap: 5px;
+}
+
+#photo-list .card {
+  max-width: 250px;
+}
