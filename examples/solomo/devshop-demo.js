@@ -1,13 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { MeteorCamera } from 'meteor/mdg:camera';
-import { Router } from 'meteor/iron:router';
 import { Reload } from 'meteor/reload';
 import { Geolocation } from 'meteor/mdg:geolocation';
 import { Tracker } from 'meteor/tracker';
 import { ReactiveVar } from "meteor/reactive-var";
 import { Template } from "meteor/templating";
 import { Mongo } from "meteor/mongo";
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 const Photos = new Mongo.Collection("photos");
 
@@ -46,7 +46,7 @@ if (Meteor.isClient) {
       }
     });
 
-    Router.go("/list");
+    FlowRouter.go("/list");
   };
 
   Template.layout.events({
@@ -62,7 +62,7 @@ if (Meteor.isClient) {
 
   Template.layout.helpers({
     onPage: function (pageName) {
-      return Router.current().route.name === pageName;
+      return FlowRouter.current().route.name === pageName;
     }
   });
 
