@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Cordova.depends({
-  "cordova-plugin-geolocation": "2.1.0"
+  "cordova-plugin-geolocation": "5.0.0"
 });
 
 Package.onUse(function (api) {
